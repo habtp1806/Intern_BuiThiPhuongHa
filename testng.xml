@@ -1,0 +1,16 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="HelloSelenium" verbose="1">
+    <parameter name="browserType" value="chrome"/>
+    <parameter name="appURL"
+               value="http://saferailway.somee.com/"/>
+    <test name="sample test">
+        <classes>
+            <class name="testcases.RegisterTest">
+                <methods>
+                    <include name="TC01"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>
