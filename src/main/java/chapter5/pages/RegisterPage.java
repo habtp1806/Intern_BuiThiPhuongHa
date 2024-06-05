@@ -1,4 +1,4 @@
-package chapter5.base.pages;
+package chapter5.pages;
 
 import chapter5.base.BaseSetup;
 import org.openqa.selenium.By;
@@ -11,19 +11,24 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-public class LoginPage extends BaseSetup {
-    private By emailtxt = By.xpath("//input[@id='username']");
-    private By passwordtxt = By.xpath("//input[@id='password']");
-    private By loginBtn = By.xpath("//input[@title='Login']");
+public class RegisterPage extends BaseSetup {
 
-    public LoginPage(WebDriver driver) {
+    private By emailtxt = By.id("email");
+    private By passwordtxt = By.id("password");
+    private By confirmPass = By.id("confirmPassword");
+    private By pid = By.id("pid");
+    private By registerBtn = By.xpath("//input[@title='Register']");
+
+    public RegisterPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void login(String email, String password) throws Exception {
+    public void register(String email, String password, String confirmPass, String pidNumber) throws Exception {
         enterEmail(email);
         enterPassword(password);
-        clickLogin();
+        enterconfirmPassword(confirmPass);
+        enterPid(pidNumber);
+        clickRegister();
         Thread.sleep(1000);
     }
 
@@ -40,14 +45,26 @@ public class LoginPage extends BaseSetup {
             passwordTxtBox.sendKeys(password);
     }
 
-    public void clickLogin() {
-        WebElement loginButton = driver.findElement(loginBtn);
-        if (loginButton.isDisplayed()) {
-            // Scroll to the login button
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", loginButton);
+    public void enterconfirmPassword(String confirmPassword) {
+        WebElement confirmPasswordTxtBox = driver.findElement(confirmPass);
+        if (confirmPasswordTxtBox.isDisplayed())
+            confirmPasswordTxtBox.sendKeys(confirmPassword);
+    }
 
-            // Click on the login button
-            loginButton.click();
+    public void enterPid(String pidNumber) {
+        WebElement pidTxtBox = driver.findElement(pid);
+        if (pidTxtBox.isDisplayed())
+            pidTxtBox.sendKeys(pidNumber);
+    }
+
+
+    public void clickRegister() {
+        WebElement registerButton = driver.findElement(registerBtn);
+        if (registerButton.isDisplayed()) {
+
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", registerButton);
+
+            registerButton.click();
         }
     }
 

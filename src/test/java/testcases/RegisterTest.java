@@ -1,15 +1,12 @@
 package testcases;
 
 import chapter5.base.BaseSetup;
+import chapter5.pages.*;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-import chapter5.base.pages.HomePage;
-import chapter5.base.pages.LoginPage;
-import chapter5.base.pages.MailPage;
-import chapter5.base.pages.RegisterPage;
 
 public class RegisterTest extends BaseSetup {
 
@@ -17,16 +14,20 @@ public class RegisterTest extends BaseSetup {
     private MailPage mailPage;
     private HomePage homePage;
     private LoginPage loginPage;
+    private TimeTablePage timeTablePage;
     private String email;
     private String password = "123456789";
 
     @BeforeClass
     public void setUp() {
         driver = new ChromeDriver();
+        driver.manage().window().maximize();
         registerPage = new RegisterPage(driver);
         mailPage = new MailPage(driver);
         homePage = new HomePage(driver); // Thêm dòng này để tạo đối tượng HomePage
         loginPage = new LoginPage(driver);
+        timeTablePage = new TimeTablePage(driver);
+
 
     }
 
@@ -53,7 +54,8 @@ public class RegisterTest extends BaseSetup {
         homePage.clickTab("Login");
         loginPage.login(email, password);
         homePage.clickTab("Timetable");
-        
+        timeTablePage.clickCheckPriceForRoute("Sài Gòn", "Đà Nẵng");
+
 
     }
 

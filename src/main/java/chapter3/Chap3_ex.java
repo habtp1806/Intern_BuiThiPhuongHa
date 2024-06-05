@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class chap3_ex {
+public class Chap3_ex {
     public static void main(String[] args) {
         WebDriver chromeDriver = new ChromeDriver();
 

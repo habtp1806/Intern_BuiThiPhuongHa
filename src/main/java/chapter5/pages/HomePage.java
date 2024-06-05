@@ -1,4 +1,4 @@
-package chapter5.base.pages;
+package chapter5.pages;
 
 import chapter5.base.BaseSetup;
 import org.openqa.selenium.By;
@@ -29,5 +29,5 @@ public class HomePage extends BaseSetup {
         tabElement.click();
     }
 
-    // Định nghĩa các phương thức khác để tương tác với các tab khác trên trang chủ
+    
 }

@@ -1,4 +1,4 @@
-package chapter5.base.pages;
+package chapter5.pages;
 
 import chapter5.base.BaseSetup;
 import org.openqa.selenium.By;
@@ -11,24 +11,19 @@ import org.testng.Assert;
 
 import java.time.Duration;
 
-public class RegisterPage extends BaseSetup {
+public class LoginPage extends BaseSetup {
+    private By emailtxt = By.xpath("//input[@id='username']");
+    private By passwordtxt = By.xpath("//input[@id='password']");
+    private By loginBtn = By.xpath("//input[@title='Login']");
 
-    private By emailtxt = By.id("email");
-    private By passwordtxt = By.id("password");
-    private By confirmPass = By.id("confirmPassword");
-    private By pid = By.id("pid");
-    private By registerBtn = By.xpath("//input[@title='Register']");
-
-    public RegisterPage(WebDriver driver) {
+    public LoginPage(WebDriver driver) {
         this.driver = driver;
     }
 
-    public void register(String email, String password, String confirmPass, String pidNumber) throws Exception {
+    public void login(String email, String password) throws Exception {
         enterEmail(email);
         enterPassword(password);
-        enterconfirmPassword(confirmPass);
-        enterPid(pidNumber);
-        clickRegister();
+        clickLogin();
         Thread.sleep(1000);
     }
 
@@ -45,23 +40,14 @@ public class RegisterPage extends BaseSetup {
             passwordTxtBox.sendKeys(password);
     }
 
-    public void enterconfirmPassword(String confirmPassword) {
-        WebElement confirmPasswordTxtBox = driver.findElement(confirmPass);
-        if (confirmPasswordTxtBox.isDisplayed())
-            confirmPasswordTxtBox.sendKeys(confirmPassword);
-    }
+    public void clickLogin() {
+        WebElement loginButton = driver.findElement(loginBtn);
+        if (loginButton.isDisplayed()) {
+            // Scroll to the login button
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", loginButton);
 
-    public void enterPid(String pidNumber) {
-        WebElement pidTxtBox = driver.findElement(pid);
-        if (pidTxtBox.isDisplayed())
-            pidTxtBox.sendKeys(pidNumber);
-    }
-
-
-    public void clickRegister() {
-        WebElement signin = driver.findElement(registerBtn);
-        if (signin.isDisplayed()) {
-            signin.click();
+            // Click on the login button
+            loginButton.click();
         }
     }
 
