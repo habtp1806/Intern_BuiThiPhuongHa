@@ -19,6 +19,11 @@ public class MailPage {
         this.driver = driver;
     }
 
+    // Phương thức mở trang mail
+    public void openMailPage() {
+        driver.get("https://www.guerrillamail.com/inbox");
+    }
+
     public String getMail() throws Exception {
         WebElement emailElement = new WebDriverWait(driver, Duration.ofSeconds(10)).until(
                 ExpectedConditions.visibilityOfElementLocated(emailLocator)
