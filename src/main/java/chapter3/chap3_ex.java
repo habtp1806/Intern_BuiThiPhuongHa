@@ -1,4 +1,4 @@
-package org.example;
+package chapter3;
 
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -68,7 +68,7 @@ public class chap3_ex {
             driver.findElement(By.xpath("//input[@id='username']")).sendKeys(emailAddress);
             driver.findElement(By.xpath("//input[@id='password']")).sendKeys(password);
             driver.findElement(By.xpath("//input[@title='Login']")).click();
-            
+
             // book ticket form
             driver.findElement(By.xpath("//div[@id='menu']//li/a[span[text()='Book ticket']]")).click();
             driver.findElement(By.xpath("//select[@name='ArriveStation']")).sendKeys("Phan Thiet");

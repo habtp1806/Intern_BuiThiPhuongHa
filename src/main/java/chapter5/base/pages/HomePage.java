@@ -1,5 +1,6 @@
-package pages;
+package chapter5.base.pages;
 
+import chapter5.base.BaseSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -8,8 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class HomePage {
-    private WebDriver driver;
+public class HomePage extends BaseSetup {
+
     private WebDriverWait wait;
 
     public HomePage(WebDriver driver) {
@@ -17,8 +18,9 @@ public class HomePage {
         wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
-    public void openhomePage() {
-        driver.get("http://saferailway.somee.com/");
+    public HomePage openhomePage() {
+        driver.get(raiwayUrl);
+        return this;
     }
 
     public void clickTab(String tabName) {

@@ -1,24 +1,23 @@
-package pages;
+package chapter5.base.pages;
 
+import chapter5.base.BaseSetup;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import java.time.Duration;
 
-public class RegisterPage {
-    private WebDriver driver;
+public class RegisterPage extends BaseSetup {
+
     private By emailtxt = By.id("email");
     private By passwordtxt = By.id("password");
     private By confirmPass = By.id("confirmPassword");
     private By pid = By.id("pid");
     private By registerBtn = By.xpath("//input[@title='Register']");
-
 
     public RegisterPage(WebDriver driver) {
         this.driver = driver;

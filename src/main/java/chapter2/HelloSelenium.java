@@ -1,4 +1,4 @@
-package org.example;
+package chapter2;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -21,7 +21,8 @@ public class HelloSelenium {
         } catch (WebDriverException e) {
             System.out.println("Firefox WebDriver initialization failed: " + e.getMessage());
         }
-}
+    }
+
     private static void verifyTitle(WebDriver driver, String browserName) {
         try {
             driver.get("https://www.selenium.dev/documentation/");
