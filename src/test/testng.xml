@@ -3,7 +3,7 @@
 <suite name="HelloSelenium" verbose="1">
     <test name="sample test">
         <classes>
-            <class name="testcases.RegisterTest">
+            <class name="testcases.BookTicketTest">
                 <methods>
                     <include name="TC02"/>
                 </methods>

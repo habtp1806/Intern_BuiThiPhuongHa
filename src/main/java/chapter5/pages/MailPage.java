@@ -18,7 +18,6 @@ public class MailPage extends BaseSetup {
         this.driver = driver;
     }
 
-    // Phương thức mở trang mail
     public void openMailPage() {
         driver.get("https://www.guerrillamail.com/inbox");
     }
@@ -45,6 +44,5 @@ public class MailPage extends BaseSetup {
         );
         linkElement.click();
     }
-
-
+    
 }

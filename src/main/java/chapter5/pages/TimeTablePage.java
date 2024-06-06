@@ -12,7 +12,7 @@ public class TimeTablePage extends BaseSetup {
         this.driver = driver;
     }
 
-    public void clickCheckPriceForRoute(String departure, String destination) {
+    public void clickCheckPrice(String departure, String destination) {
         String xpathExpression = String.format(checkPrice, departure, destination);
         WebElement checkPriceLink = driver.findElement(By.xpath(xpathExpression));
         checkPriceLink.click();

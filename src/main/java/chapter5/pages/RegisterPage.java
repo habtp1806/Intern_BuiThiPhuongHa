@@ -57,31 +57,13 @@ public class RegisterPage extends BaseSetup {
             pidTxtBox.sendKeys(pidNumber);
     }
 
-
     public void clickRegister() {
         WebElement registerButton = driver.findElement(registerBtn);
         if (registerButton.isDisplayed()) {
-
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", registerButton);
-
             registerButton.click();
         }
     }
 
-    public void waitForPageLoaded() {
-        ExpectedCondition<Boolean> expectation = new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver driver) {
-                return ((JavascriptExecutor) driver).executeScript("return document.readyState").toString()
-                        .equals("complete");
-            }
-        };
-        try {
-            Thread.sleep(1000);
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            wait.until(expectation);
-        } catch (Throwable error) {
-            Assert.fail("Timeout waiting for Page Load Request to complete.");
-        }
-    }
 }
 
