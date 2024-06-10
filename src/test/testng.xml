@@ -3,9 +3,9 @@
 <suite name="HelloSelenium" verbose="1">
     <test name="sample test">
         <classes>
-            <class name="testcases.BookTicketTest">
+            <class name="testcases.Chapter5_8Test">
                 <methods>
-                    <include name="TC02"/>
+                    <include name="bookTicket"/>
                 </methods>
             </class>
         </classes>
