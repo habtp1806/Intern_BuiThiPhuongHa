@@ -21,7 +21,6 @@ public class Chapter5_8Test extends BaseTest {
     private TicketPricePage ticketPricePage = new TicketPricePage();
     private BookTicketPage bookTicketPage = new BookTicketPage();
     private String email;
-    private String password = "123456789";
     private String departStation = "Sài Gòn";
     private String arriveStation = "Đà Nẵng";
     private String seatType = "Soft seat";
@@ -37,7 +36,7 @@ public class Chapter5_8Test extends BaseTest {
         WebDriverConfig.driver.switchTo().newWindow(WindowType.TAB);
         basePage.openHomePage();
         basePage.clickTab("Register");
-        registerPage.register(email, password, password, password);
+        registerPage.register(email, password, password, pid);
         mailPage.switchToEmail();
         basePage.refreshPage();
         mailPage.verifyMail();

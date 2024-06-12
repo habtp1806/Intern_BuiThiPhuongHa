@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class BookTicketPage {
+public class BookTicketPage extends BasePage {
     private By departDate = By.xpath("//select[@name='Date']");
     private By ticketAmount = By.xpath("//select[@name='TicketAmount']");
     private By bookTicketBtn = By.xpath("//input[@value='Book ticket']");
@@ -21,13 +21,12 @@ public class BookTicketPage {
     private By typeSeat = By.xpath("//select[@name='SeatType']");
 
     public void bookTicket(String departDate, String departFrom, String ariveAt, String seatType, String ticketAmount) {
-        if (departDate != null) {
-            selectDepartDate(departDate);
-        }
-        selectArriveAt(ariveAt);
+
+        selectDepartDate(departDate);
         selectDepartFrom(departFrom);
-        selectTicketAmount(ticketAmount);
+        selectArriveAt(ariveAt);
         selectTypeSeat(seatType);
+        selectTicketAmount(ticketAmount);
         clickBookTicket();
         isConfirmationPage();
 
@@ -50,30 +49,27 @@ public class BookTicketPage {
         return dateDropdown.getFirstSelectedOption().getText();
     }
 
-    public String selectArriveAt(String arriveStation) {
+    public void selectArriveAt(String arriveStation) {
         Select arriveAtDropdown = new Select(WebDriverConfig.driver.findElement(arriveAt));
-        return arriveAtDropdown.getFirstSelectedOption().getText();
+        arriveAtDropdown.selectByVisibleText(arriveStation);
     }
 
-    public String selectDepartFrom(String departStation) {
+    public void selectDepartFrom(String departStation) {
         Select arriveAtDropdown = new Select(WebDriverConfig.driver.findElement(departFrom));
-        return arriveAtDropdown.getFirstSelectedOption().getText();
+        arriveAtDropdown.selectByVisibleText(departStation);
     }
 
 
-    public String selectTypeSeat(String seatType) {
+    public void selectTypeSeat(String seatType) {
         Select seatTypeDropdown = new Select(WebDriverConfig.driver.findElement(typeSeat));
-        return seatTypeDropdown.getFirstSelectedOption().getText();
+        seatTypeDropdown.selectByVisibleText(seatType);
     }
 
 
     public void clickBookTicket() {
         WebElement bookBtn = WebDriverConfig.driver.findElement(bookTicketBtn);
         if (bookBtn.isDisplayed()) {
-            // Scroll to the login button
             ((JavascriptExecutor) WebDriverConfig.driver).executeScript("arguments[0].scrollIntoView(true);", bookBtn);
-
-            // Click on the login button
             bookBtn.click();
         }
 
@@ -106,7 +102,6 @@ public class BookTicketPage {
                 String actualExpriedDate = cells.get(5).getText();
                 String actualAmount = cells.get(6).getText();
                 // String actualToatal = cells.get(7).getText();
-                //
                 System.out.println("Actual Depart Station: " + actualDepartStation);
                 System.out.println("Actual Arrive Station: " + actualArriveStation);
                 System.out.println("Actual Seat Type: " + actualSeatType);
@@ -115,8 +110,12 @@ public class BookTicketPage {
                 System.out.println("Actual Expired Date: " + actualExpriedDate);
                 System.out.println("Actual Amount: " + actualAmount);
                 //  System.out.println("Actual Total: " + actualTotal);
-                if (actualDepartStation.equals(from) && actualArriveStation.equals(to) && actualSeatType.equals(seatType)
-                        && actualBookingDate.equals(bookingDate) && actualExpriedDate.equals(expriedDate) && actualAmount.equals(amount)) {
+                if ((from.isEmpty() || actualDepartStation.equals(from)) &&
+                        (to.isEmpty() || actualArriveStation.equals(to)) &&
+                        (seatType.isEmpty() || actualSeatType.equals(seatType)) &&
+                        (bookingDate.isEmpty() || actualBookingDate.equals(bookingDate)) &&
+                        (expriedDate.isEmpty() || actualExpriedDate.equals(expriedDate)) &&
+                        (amount.isEmpty() || actualAmount.equals(amount))) {
                     return true;
                 }
             }

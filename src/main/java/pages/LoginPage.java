@@ -1,5 +1,6 @@
 package pages;
 
+import base.Config;
 import base.WebDriverConfig;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -14,8 +15,8 @@ public class LoginPage extends BasePage {
     private By emailtxt = By.xpath("//input[@id='username']");
     private By passwordtxt = By.xpath("//input[@id='password']");
     private By loginBtn = By.xpath("//input[@title='Login']");
-    private By messFail = By.xpath("p[@class='message error LoginForm']");
-    // private String welcomeUser = String.format("//strong[normalize-space()='Welcome %s']");
+    private By messFail = By.xpath("//p[@class='message error LoginForm']");
+    private static String railway;
 
 
     public void login(String email, String password) throws Exception {
@@ -49,14 +50,10 @@ public class LoginPage extends BasePage {
     }
 
     public void verifyLoginFailure(String expectedErrorMessage) {
-        waitForElementToBeVisible(messFail, 5);
         WebElement errorMessage = WebDriverConfig.driver.findElement(messFail);
         String actualErrorMessage = errorMessage.getText();
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "Error message does not match.");
     }
-//    public void verifyWelcomeUser(String user) {
-//        WebElement welcomeMessage = WebDriverConfig.driver.findElement();
-//        Assert.assertTrue(welcomeMessage.isDisplayed(), "Welcome user message is not displayed.");
-//    }
+
 }
 

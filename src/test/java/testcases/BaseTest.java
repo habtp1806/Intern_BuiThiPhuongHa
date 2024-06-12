@@ -15,6 +15,9 @@ import pages.MailPage;
 
 
 public class BaseTest {
+    protected String email = "dqzvyoml@guerrillamail.com";
+    protected String password = "123456789";
+    protected String pid = "123456789";
 
     @BeforeTest
     public void setUp() {
