@@ -1,30 +1,26 @@
-package testcases;
+package testcases.Chapter10;
 
-import base.WebDriverConfig;
-import org.openqa.selenium.By;
+import model.User;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.LoginPage;
-import pages.MailPage;
-import pages.RegisterPage;
+import testcases.base.BaseTest;
 
-public class Chapter10_LogoutTest extends BaseTest {
+public class LogoutTest extends BaseTest {
     private BasePage basePage = new BasePage();
     private LoginPage loginPage = new LoginPage();
-    private String email = "dqzvyoml@guerrillamail.com";
-    private String password = "123456789";
 
-    @Test
-    public void TC6() throws Exception {
-        System.out.println("User is redirected to Home page after logging out");
+    @Test(description = "User is redirected to Home page after logging out")
+    public void TC6() {
+        User user = new User(email, password);
         basePage.openHomePage();
         basePage.clickTab("Login");
-        loginPage.login(email, password);
+        loginPage.login(user);
         basePage.clickTab("FAQ");
         basePage.clickTab("Log out");
         Assert.assertFalse(basePage.isTabPresent("Log out"), "Test Failed: 'Log out' tab is still present.");
-        
+
     }
 
 }

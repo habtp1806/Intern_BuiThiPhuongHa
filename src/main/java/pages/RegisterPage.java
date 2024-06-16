@@ -1,88 +1,74 @@
 package pages;
 
-import base.Config;
-import base.WebDriverConfig;
+import base.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import utils.SeleniumHelper;
 
 public class RegisterPage extends BasePage {
-    private By emailtxt = By.id("email");
-    private By passwordtxt = By.id("password");
-    private By confirmPass = By.id("confirmPassword");
-    private By pid = By.id("pid");
-    private By registerBtn = By.xpath("//input[@title='Register']");
-    private By messError = By.xpath(" //p[@class='message error']");
-    private By passwordMess = By.xpath("//label[normalize-space()='Invalid password length']");
-    private By pidMess = By.xpath("//label[normalize-space()='Invalid ID length']");
-    private By confirmMess = By.xpath("//h1[normalize-space()='Thank you for registering your account']");
-    private By confirmRegister = By.xpath("//p[contains(text(),'Registration Confirmed! You can now log in to the ')]");
+    private By emailtxtXPath = By.id("email");
+    private By passwordtxtXPath = By.id("password");
+    private By confirmPassXPath = By.id("confirmPassword");
+    private By pidXPath = By.id("pid");
+    private By registerBtnXPath = By.xpath("//input[@title='Register']");
+    private By messErrorXPath = By.xpath(" //p[@class='message error']");
+    private By passwordMessXPath = By.xpath("//label[normalize-space()='Invalid password length']");
+    private By pidMessXPath = By.xpath("//label[normalize-space()='Invalid ID length']");
+    private By confirmMessXPath = By.xpath("//h1[normalize-space()='Thank you for registering your account']");
+    private By confirmRegisterXPath = By.xpath("//p[contains(text(),'Registration Confirmed! You can now log in to the ')]");
 
-    public void register(String email, String password, String confirmPass, String pidNumber) throws Exception {
+    public void register(String email, String password, String confirmPass, String pidNumber) {
         enterEmail(email);
         enterPassword(password);
         enterconfirmPassword(confirmPass);
         enterPid(pidNumber);
         clickRegister();
-        Thread.sleep(1000);
     }
 
     public void enterEmail(String email) {
-        WebElement emailTxtBox = WebDriverConfig.driver.findElement(emailtxt);
-        if (emailTxtBox.isDisplayed())
-            emailTxtBox.sendKeys(email);
-
+        SeleniumHelper.enterText(emailtxtXPath, email);
     }
 
     public void enterPassword(String password) {
-        WebElement passwordTxtBox = WebDriverConfig.driver.findElement(passwordtxt);
-        if (passwordTxtBox.isDisplayed())
-            passwordTxtBox.sendKeys(password);
+        SeleniumHelper.enterText(passwordtxtXPath, password);
     }
 
     public void enterconfirmPassword(String confirmPassword) {
-        WebElement confirmPasswordTxtBox = WebDriverConfig.driver.findElement(confirmPass);
-        if (confirmPasswordTxtBox.isDisplayed())
-            confirmPasswordTxtBox.sendKeys(confirmPassword);
+        SeleniumHelper.enterText(confirmPassXPath, confirmPassword);
     }
 
     public void enterPid(String pidNumber) {
-        WebElement pidTxtBox = WebDriverConfig.driver.findElement(pid);
-        if (pidTxtBox.isDisplayed())
-            pidTxtBox.sendKeys(pidNumber);
+        SeleniumHelper.enterText(pidXPath, pidNumber);
     }
 
     public void clickRegister() {
-        WebElement registerButton = WebDriverConfig.driver.findElement(registerBtn);
-        if (registerButton.isDisplayed()) {
-            ((JavascriptExecutor) WebDriverConfig.driver).executeScript("arguments[0].scrollIntoView(true);", registerButton);
-            registerButton.click();
-        }
+        SeleniumHelper.scrollToElement(registerBtnXPath);
+        SeleniumHelper.clickElement(registerBtnXPath);
     }
 
     public void verifyRegisterFailure(String expectedErrorMessage) {
-        waitForElementToBeVisible(messError, 5);
-        WebElement errorMessage = WebDriverConfig.driver.findElement(messError);
-        String actualErrorMessage = errorMessage.getText();
+        waitForElementToBeVisible(messErrorXPath, 5);
+        String actualErrorMessage = SeleniumHelper.getElementText(messErrorXPath);
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "Error message does not match.");
     }
 
+
     public String getPasswordErrorMessage() {
-        return WebDriverConfig.driver.findElement(passwordMess).getText();
+        return SeleniumHelper.getElementText(passwordMessXPath);
     }
 
     public String getPIDErrorMessage() {
-        return WebDriverConfig.driver.findElement(pidMess).getText();
+        return SeleniumHelper.getElementText(pidMessXPath);
     }
 
     public boolean isConfirmationSuccessful() {
-        return WebDriverConfig.driver.findElements(confirmMess).size() > 0;
+        return SeleniumHelper.isElementDisplayed(confirmMessXPath);
     }
 
     public boolean isConfirmationRegister() {
-        return WebDriverConfig.driver.findElements(confirmRegister).size() > 0;
+        return SeleniumHelper.isElementDisplayed(confirmRegisterXPath);
     }
 }
 

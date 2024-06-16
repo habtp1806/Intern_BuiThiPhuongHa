@@ -1,10 +1,16 @@
 package testcases;
 
-import base.WebDriverConfig;
+import base.DriverManager;
+import enums.RailwayStation;
+import enums.SeatType;
+import model.BookTicket;
+import model.User;
 import org.openqa.selenium.WindowType;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.*;
+import testcases.base.BaseTest;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,12 +34,12 @@ public class Chapter5_8Test extends BaseTest {
     private String expiredDate = LocalDate.now().plusDays(10).format(DateTimeFormatter.ofPattern("M/d/yyyy"));
     private String amount = "2";
 
-    @BeforeTest
+    @BeforeMethod
     public void Register() throws Exception {
 
         mailPage.openMailPage();
         email = mailPage.getMail();
-        WebDriverConfig.driver.switchTo().newWindow(WindowType.TAB);
+        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
         basePage.openHomePage();
         basePage.clickTab("Register");
         registerPage.register(email, password, password, pid);
@@ -44,15 +50,16 @@ public class Chapter5_8Test extends BaseTest {
 
     @Test
     public void bookTicket() throws Exception {
-
-        WebDriverConfig.driver.switchTo().newWindow(WindowType.TAB);
+        User user = new User(email, password);
+        BookTicket ticket = new BookTicket(bookingDate, null, null, null, "5");
+        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
         basePage.openHomePage();
         basePage.clickTab("Login");
-        loginPage.login(email, password);
+        loginPage.login(user);
         basePage.clickTab("Timetable");
         timeTablePage.clickCheckPrice(departStation, arriveStation);
         ticketPricePage.chooseTypeSeat(seatType);
-        bookTicketPage.bookTicket(bookingDate, "", "", "", amount);
+        bookTicketPage.bookTicket(ticket);
         boolean result = bookTicketPage.verifySelectedBooking(departStation, arriveStation, seatType, bookingDate, expiredDate, amount);
         assertTrue("The booking should be verified correctly", result);
     }

@@ -27,4 +27,9 @@ public class Config {
     public static String getProperty(String key) {
         return properties.getProperty(key);
     }
+
+    public static int getTimeInSeconds(String propertyName) {
+        String propertyValue = getProperty(propertyName);
+        return Integer.parseInt(propertyValue);
+    }
 }

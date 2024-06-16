@@ -1,82 +1,93 @@
 package pages;
 
-import base.WebDriverConfig;
+import base.DriverManager;
+import model.BookTicket;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import utils.SeleniumHelper;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class BookTicketPage extends BasePage {
-    private By departDate = By.xpath("//select[@name='Date']");
-    private By ticketAmount = By.xpath("//select[@name='TicketAmount']");
-    private By bookTicketBtn = By.xpath("//input[@value='Book ticket']");
-    private By bookTicketTable = By.xpath("//table[@class='MyTable WideTable']");
-    private By arriveAt = By.xpath("//select[@name='ArriveStation']");
-    private By departFrom = By.xpath("//select[@name='DepartStation']");
-    private By typeSeat = By.xpath("//select[@name='SeatType']");
+    private By departDateXPath = By.xpath("//select[@name='Date']");
+    private By ticketAmountXPath = By.xpath("//select[@name='TicketAmount']");
+    private By bookTicketBtnXPath = By.xpath("//input[@value='Book ticket']");
+    private By bookTicketTableXPath = By.xpath("//table[@class='MyTable WideTable']");
+    private By arriveAtXPath = By.xpath("//select[@name='ArriveStation']");
+    private By departFromXPath = By.xpath("//select[@name='DepartStation']");
+    private By typeSeatXPath = By.xpath("//select[@name='SeatType']");
 
-    public void bookTicket(String departDate, String departFrom, String ariveAt, String seatType, String ticketAmount) {
+    public void bookTicket(BookTicket ticket) {
 
-        selectDepartDate(departDate);
-        selectDepartFrom(departFrom);
-        selectArriveAt(ariveAt);
-        selectTypeSeat(seatType);
-        selectTicketAmount(ticketAmount);
+        if (ticket == null) {
+            throw new IllegalArgumentException("BookTicket object cannot be null");
+        }
+
+        if (ticket.getDepartDate() != null) {
+            selectDepartDate(ticket.getDepartDate());
+        }
+
+        if (ticket.getDepartFrom() != null) {
+            selectDepartFrom(ticket.getDepartFrom());
+        }
+
+
+        if (ticket.getSeatType() != null) {
+            selectTypeSeat(ticket.getSeatType());
+        }
+
+        if (ticket.getTicketAmount() != null) {
+            selectTicketAmount(ticket.getTicketAmount());
+        }
+        if (ticket.getArriveAt() != null) {
+            //  selectArriveAt(ticket.getArriveAt());
+            enterArriveAt(ticket.getArriveAt());
+        }
         clickBookTicket();
         isConfirmationPage();
 
     }
 
     public void selectDepartDate(String date) {
-        Select dateDropdown = new Select(WebDriverConfig.driver.findElement(departDate));
-        dateDropdown.selectByVisibleText(date);
-
+        SeleniumHelper.selectByVisibleText(departDateXPath, date);
     }
 
     public void selectTicketAmount(String amount) {
-        Select amountDropdown = new Select(WebDriverConfig.driver.findElement(ticketAmount));
-        amountDropdown.selectByVisibleText(amount);
+        SeleniumHelper.selectByVisibleText(ticketAmountXPath, amount);
     }
 
-
     public String getSelectedDepartDate() {
-        Select dateDropdown = new Select(WebDriverConfig.driver.findElement(departDate));
+        Select dateDropdown = new Select(DriverManager.driver.findElement(departDateXPath));
         return dateDropdown.getFirstSelectedOption().getText();
     }
 
     public void selectArriveAt(String arriveStation) {
-        Select arriveAtDropdown = new Select(WebDriverConfig.driver.findElement(arriveAt));
-        arriveAtDropdown.selectByVisibleText(arriveStation);
+        SeleniumHelper.selectByVisibleText(arriveAtXPath, arriveStation);
+    }
+
+    public void enterArriveAt(String arriveStation) {
+        SeleniumHelper.enterText(arriveAtXPath, arriveStation);
     }
 
     public void selectDepartFrom(String departStation) {
-        Select arriveAtDropdown = new Select(WebDriverConfig.driver.findElement(departFrom));
-        arriveAtDropdown.selectByVisibleText(departStation);
+        SeleniumHelper.selectByVisibleText(departFromXPath, departStation);
     }
 
 
     public void selectTypeSeat(String seatType) {
-        Select seatTypeDropdown = new Select(WebDriverConfig.driver.findElement(typeSeat));
-        seatTypeDropdown.selectByVisibleText(seatType);
+        SeleniumHelper.selectByVisibleText(typeSeatXPath, seatType);
     }
 
 
     public void clickBookTicket() {
-        WebElement bookBtn = WebDriverConfig.driver.findElement(bookTicketBtn);
-        if (bookBtn.isDisplayed()) {
-            ((JavascriptExecutor) WebDriverConfig.driver).executeScript("arguments[0].scrollIntoView(true);", bookBtn);
-            bookBtn.click();
-        }
-
+        SeleniumHelper.scrollToElement(bookTicketBtnXPath);
+        SeleniumHelper.clickElement(bookTicketBtnXPath);
     }
 
     public String getPageTitle() {
-        return WebDriverConfig.driver.getTitle();
+        return DriverManager.driver.getTitle();
     }
 
 
@@ -88,7 +99,7 @@ public class BookTicketPage extends BasePage {
 
     public boolean verifySelectedBooking(String from, String to, String seatType, String bookingDate, String expriedDate, String amount) {
         // get infor of table
-        WebElement table = WebDriverConfig.driver.findElement(bookTicketTable);
+        WebElement table = DriverManager.driver.findElement(bookTicketTableXPath);
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (WebElement row : rows) {
             List<WebElement> cells = row.findElements(By.tagName("td"));
@@ -110,12 +121,12 @@ public class BookTicketPage extends BasePage {
                 System.out.println("Actual Expired Date: " + actualExpriedDate);
                 System.out.println("Actual Amount: " + actualAmount);
                 //  System.out.println("Actual Total: " + actualTotal);
-                if ((from.isEmpty() || actualDepartStation.equals(from)) &&
-                        (to.isEmpty() || actualArriveStation.equals(to)) &&
-                        (seatType.isEmpty() || actualSeatType.equals(seatType)) &&
-                        (bookingDate.isEmpty() || actualBookingDate.equals(bookingDate)) &&
-                        (expriedDate.isEmpty() || actualExpriedDate.equals(expriedDate)) &&
-                        (amount.isEmpty() || actualAmount.equals(amount))) {
+                if ((from == null || actualDepartStation.equals(from)) &&
+                        (to == null || actualArriveStation.equals(to)) &&
+                        (seatType == null || actualSeatType.equals(seatType)) &&
+                        (bookingDate == null || bookingDate.isEmpty() || actualBookingDate.equals(bookingDate)) &&
+                        (expriedDate == null || expriedDate.isEmpty() || actualExpriedDate.equals(expriedDate)) &&
+                        (amount == null || amount.isEmpty() || actualAmount.equals(amount))) {
                     return true;
                 }
             }

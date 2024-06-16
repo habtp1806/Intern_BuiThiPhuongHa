@@ -3,7 +3,7 @@ package base;
 import org.openqa.selenium.WebDriver;
 
 
-public class WebDriverConfig {
+public class DriverManager {
     public static WebDriver driver;
 
 

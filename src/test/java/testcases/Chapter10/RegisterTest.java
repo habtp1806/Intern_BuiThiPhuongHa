@@ -1,28 +1,27 @@
-package testcases;
+package testcases.Chapter10;
 
 import base.Config;
-import base.WebDriverConfig;
-import org.openqa.selenium.WindowType;
+import base.DriverManager;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.HomePage;
 import pages.MailPage;
 import pages.RegisterPage;
+import testcases.base.BaseTest;
 
 import java.util.Set;
 
 import static org.testng.AssertJUnit.assertTrue;
 
-public class Chapter10_Register extends BaseTest {
+public class RegisterTest extends BaseTest {
     private RegisterPage registerPage = new RegisterPage();
     private MailPage mailPage = new MailPage();
     private BasePage basePage = new BasePage();
     private HomePage homePage = new HomePage();
 
-    @Test
-    public void TC7() throws Exception {
-        System.out.println("User can't create account with an already in-use email");
+    @Test(description = "User can't create account with an already in-use email")
+    public void TC7() {
         basePage.openHomePage();
         basePage.clickTab("Register");
         registerPage.register(email, password, "123456789", "123456789");
@@ -30,9 +29,8 @@ public class Chapter10_Register extends BaseTest {
 
     }
 
-    @Test
-    public void TC8() throws Exception {
-        System.out.println("User can't create account while password and PID fields are empty");
+    @Test(description = "User can't create account while password and PID fields are empty")
+    public void TC8() {
         basePage.openHomePage();
         basePage.clickTab("Register");
         registerPage.register(email, "", "", "");
@@ -43,9 +41,8 @@ public class Chapter10_Register extends BaseTest {
         Assert.assertEquals(pidError, "Invalid ID length.");
     }
 
-    @Test
-    public void TC9() throws Exception {
-        System.out.println("User create and activate account");
+    @Test(description = "User create and activate account")
+    public void TC9() {
         basePage.openHomePage();
         assertTrue("Guide link is not present on the home page.", homePage.isGuideLinkPresent());
         basePage.clickLink("create an account");
@@ -60,15 +57,18 @@ public class Chapter10_Register extends BaseTest {
         basePage.switchToWindow(mailWindow);
         basePage.refreshPage();
         mailPage.verifyMail();
-        Set<String> allTabs = WebDriverConfig.driver.getWindowHandles();
-        for (String tab : allTabs) {
-            if (!tab.equals(mailWindow) && !tab.equals(registerWindow)) {
-                WebDriverConfig.driver.switchTo().window(tab);
-                break;
-            }
-        }
+        switchToNonMailWindow(registerWindow, mailWindow);
         assertTrue("Registration Confirmed! You can now log in to the site", registerPage.isConfirmationRegister());
 
     }
 
+    private void switchToNonMailWindow(String registerWindow, String mailWindow) {
+        Set<String> allTabs = DriverManager.driver.getWindowHandles();
+        for (String tab : allTabs) {
+            if (!tab.equals(mailWindow) && !tab.equals(registerWindow)) {
+                DriverManager.driver.switchTo().window(tab);
+                break;
+            }
+        }
+    }
 }

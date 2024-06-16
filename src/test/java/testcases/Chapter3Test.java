@@ -1,15 +1,14 @@
 package testcases;
 
-import base.WebDriverConfig;
+import base.DriverManager;
+import enums.RailwayStation;
+import enums.SeatType;
+import model.BookTicket;
+import model.User;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.Test;
 import pages.*;
-
-import java.time.Duration;
+import testcases.base.BaseTest;
 
 public class Chapter3Test extends BaseTest {
     private RegisterPage registerPage = new RegisterPage();
@@ -24,23 +23,25 @@ public class Chapter3Test extends BaseTest {
     private String arriveAt = "Phan Thiết";
 
     @Test
-    public void chap3() throws Exception {
+    public void chap3() {
+        User user = new User(email, password);
+        BookTicket ticket = new BookTicket(null, null, RailwayStation.PHAN_THIET.getValue(), SeatType.SOFT_SEAT.getValue(), "2");
         mailPage.openMailPage();
-        String originalWindowHandle = WebDriverConfig.driver.getWindowHandle();
+        String originalWindowHandle = DriverManager.driver.getWindowHandle();
         email = mailPage.getMail();
-        WebDriverConfig.driver.switchTo().newWindow(WindowType.TAB);
+        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
         basePage.openHomePage();
         basePage.clickTab("Register");
         registerPage.register(email, password, password, password);
-        WebDriverConfig.driver.switchTo().window(originalWindowHandle);
-        WebDriverConfig.driver.navigate().refresh();
+        DriverManager.driver.switchTo().window(originalWindowHandle);
+        DriverManager.driver.navigate().refresh();
         mailPage.verifyMail();
-        WebDriverConfig.driver.switchTo().newWindow(WindowType.TAB);
+        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
         basePage.openHomePage();
         basePage.clickTab("Login");
-        loginPage.login(email, password);
+        loginPage.login(user);
         basePage.clickTab("Book ticket");
-        bookTicketPage.bookTicket(null, "", arriveAt, "Soft seat", "2");
+        bookTicketPage.bookTicket(ticket);
     }
 
 }
