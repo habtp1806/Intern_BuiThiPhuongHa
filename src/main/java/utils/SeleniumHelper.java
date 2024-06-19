@@ -26,7 +26,7 @@ public class SeleniumHelper {
         return SeleniumHelper.findElement(element).getAttribute(attribute);
     }
 
-    public static void enterText(By locator, String text) {
+    public static void enter(By locator, String text) {
         waitForElementToBeVisible(locator, Config.getTimeInSeconds("timeout"));
         WebElement element = DriverManager.driver.findElement(locator);
         // element.clear();

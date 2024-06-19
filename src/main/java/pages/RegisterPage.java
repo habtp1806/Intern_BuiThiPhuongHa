@@ -30,19 +30,19 @@ public class RegisterPage extends BasePage {
     }
 
     public void enterEmail(String email) {
-        SeleniumHelper.enterText(emailtxtXPath, email);
+        SeleniumHelper.enter(emailtxtXPath, email);
     }
 
     public void enterPassword(String password) {
-        SeleniumHelper.enterText(passwordtxtXPath, password);
+        SeleniumHelper.enter(passwordtxtXPath, password);
     }
 
     public void enterconfirmPassword(String confirmPassword) {
-        SeleniumHelper.enterText(confirmPassXPath, confirmPassword);
+        SeleniumHelper.enter(confirmPassXPath, confirmPassword);
     }
 
     public void enterPid(String pidNumber) {
-        SeleniumHelper.enterText(pidXPath, pidNumber);
+        SeleniumHelper.enter(pidXPath, pidNumber);
     }
 
     public void clickRegister() {

@@ -52,7 +52,7 @@ public class MailPage extends BasePage {
     }
 
     public void enterMail(String email) {
-        SeleniumHelper.enterText(emailTxtBoxXPath, email);
+        SeleniumHelper.enter(emailTxtBoxXPath, email);
     }
 
     public void selectDomainMail(String domain) {

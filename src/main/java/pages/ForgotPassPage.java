@@ -19,6 +19,6 @@ public class ForgotPassPage {
     }
 
     public void enterEmail(String email) {
-        SeleniumHelper.enterText(emailXPath, email);
+        SeleniumHelper.enter(emailXPath, email);
     }
 }

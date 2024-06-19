@@ -15,8 +15,8 @@ public class ResetPasswordPage {
     }
 
     public void resetPassword(String newPassword, String confirmPassword) {
-        SeleniumHelper.enterText(getXPathByName("newPassword"), newPassword);
-        SeleniumHelper.enterText(getXPathByName("confirmPassword"), confirmPassword);
+        SeleniumHelper.enter(getXPathByName("newPassword"), newPassword);
+        SeleniumHelper.enter(getXPathByName("confirmPassword"), confirmPassword);
         clickReset();
     }
 

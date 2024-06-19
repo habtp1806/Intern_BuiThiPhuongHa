@@ -9,7 +9,7 @@ import org.testng.Assert;
 import utils.SeleniumHelper;
 
 public class LoginPage extends BasePage {
-    
+
     private By loginBtnXPath = By.xpath("//input[@title='Login']");
     private By messFailXPath = By.xpath("//p[@class='message error LoginForm']");
     private static String railway;
@@ -25,11 +25,11 @@ public class LoginPage extends BasePage {
     }
 
     public void enterEmail(String email) {
-        SeleniumHelper.enterText(getXPathByName("username"), email);
+        SeleniumHelper.enter(getXPathByName("username"), email);
     }
 
     public void enterPassword(String password) {
-        SeleniumHelper.enterText(getXPathByName("password"), password);
+        SeleniumHelper.enter(getXPathByName("password"), password);
     }
 
     public void clickLogin() {
