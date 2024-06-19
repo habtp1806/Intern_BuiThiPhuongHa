@@ -5,6 +5,7 @@ public class User {
     private String password;
     private String confirmPass;
     private String pidNumber;
+    
 
     //login
     public User(String email, String password) {

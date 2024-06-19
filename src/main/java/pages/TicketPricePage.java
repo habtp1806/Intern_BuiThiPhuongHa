@@ -19,10 +19,10 @@ public class TicketPricePage {
         SeleniumHelper.clickElement(chooseSeat);
     }
 
-    public void verifyTitleTable(String departStation, String arriveAt) {
+    public boolean verifyTitleTable(String departStation, String arriveAt) {
         String xpathExpression = String.format(titleTicketPriceXPath, departStation, arriveAt);
         By titleLocator = By.xpath(xpathExpression);
-        Assert.assertTrue(SeleniumHelper.isElementDisplayed(titleLocator), "Title is not displayed");
+        return SeleniumHelper.isElementDisplayed(titleLocator);
 
     }
 

@@ -7,6 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import utils.SeleniumHelper;
 
+import static base.DriverManager.waitForElementToBeVisible;
+
 public class RegisterPage extends BasePage {
     private By emailtxtXPath = By.id("email");
     private By passwordtxtXPath = By.id("password");
@@ -48,10 +50,9 @@ public class RegisterPage extends BasePage {
         SeleniumHelper.clickElement(registerBtnXPath);
     }
 
-    public void verifyRegisterFailure(String expectedErrorMessage) {
+    public String verifyRegisterFailure(String expectedErrorMessage) {
         waitForElementToBeVisible(messErrorXPath, 5);
-        String actualErrorMessage = SeleniumHelper.getElementText(messErrorXPath);
-        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "Error message does not match.");
+        return SeleniumHelper.getElementText(messErrorXPath);
     }
 
 

@@ -17,23 +17,11 @@ public class BaseTest {
 
     @BeforeTest
     public void setUp() {
-        String browserType = Config.getProperty("browser").toLowerCase();
-        if (browserType.equals("chrome")) {
-            WebDriverManager.chromedriver().setup();
-            DriverManager.driver = new ChromeDriver();
-        } else if (browserType.equals("firefox")) {
-            WebDriverManager.firefoxdriver().setup();
-            DriverManager.driver = new FirefoxDriver();
-        } else {
-            throw new IllegalArgumentException("Unsupported browser type: " + browserType);
-        }
-
-        DriverManager.driver.manage().window().maximize();
-
+        DriverManager.initDriver();
     }
 
     @AfterTest
-    protected void quitBrowser() {
+    public void quitBrowser() {
         DriverManager.driver.quit();
     }
 }

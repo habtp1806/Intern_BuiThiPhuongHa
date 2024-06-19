@@ -2,6 +2,7 @@ package testcases;
 
 import base.DriverManager;
 import enums.RailwayStation;
+import enums.RailwayTab;
 import enums.SeatType;
 import model.BookTicket;
 import model.User;
@@ -9,6 +10,9 @@ import org.openqa.selenium.*;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
+
+import static base.DriverManager.openHomePage;
+import static base.DriverManager.openMailPage;
 
 public class Chapter3Test extends BaseTest {
     private RegisterPage registerPage = new RegisterPage();
@@ -26,21 +30,21 @@ public class Chapter3Test extends BaseTest {
     public void chap3() {
         User user = new User(email, password);
         BookTicket ticket = new BookTicket(null, null, RailwayStation.PHAN_THIET.getValue(), SeatType.SOFT_SEAT.getValue(), "2");
-        mailPage.openMailPage();
+        openMailPage();
         String originalWindowHandle = DriverManager.driver.getWindowHandle();
         email = mailPage.getMail();
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        basePage.openHomePage();
-        basePage.clickTab("Register");
+        openHomePage();
+        basePage.clickTab(RailwayTab.REGISTER.getValue());
         registerPage.register(email, password, password, password);
         DriverManager.driver.switchTo().window(originalWindowHandle);
         DriverManager.driver.navigate().refresh();
         mailPage.verifyMail();
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
-        basePage.clickTab("Book ticket");
+        basePage.clickTab(RailwayTab.BOOK_TICKET.getValue());
         bookTicketPage.bookTicket(ticket);
     }
 

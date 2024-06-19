@@ -1,10 +1,14 @@
 package testcases.Chapter10;
 
 import base.DriverManager;
+import enums.RailwayTab;
 import org.openqa.selenium.WindowType;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
+
+import static base.DriverManager.openHomePage;
+import static base.DriverManager.openMailPage;
 
 public class ResetPasswordTest extends BaseTest {
     private MailPage mailPage = new MailPage();
@@ -16,33 +20,32 @@ public class ResetPasswordTest extends BaseTest {
     private String confirmDifferent = "1234567899";
 
     @Test(description = "Reset password shows error if the new password is same as current")
-    public void TC10() {
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+    public void verifyPasswordResetError() {
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         basePage.clickLink("Forgot Password page");
         forgotPassPage.sendForgotPass(email);
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        mailPage.openMailPage();
+        openMailPage();
         mailPage.setMail("dqzvyoml", "guerrillamail.com");
         mailPage.clickResetLink();
-        resetPasswordPage.inputDifferentPasswords("1234567890", "1234567899");
-        resetPasswordPage.clickRest();
+        resetPasswordPage.resetPassword("1234567890", "1234567899");
+        resetPasswordPage.clickReset();
 
     }
 
-    @Test(description = "User can check price of ticket from Timetable")
-    public void TC11() {
-        System.out.println("Reset password shows error if the new password is same as current");
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+    @Test(description = "Reset password shows error if the new password and confirm password doesn't match")
+    public void verifyPassWordMatch() {
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         basePage.clickLink("Forgot Password page");
         forgotPassPage.sendForgotPass(email);
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        mailPage.openMailPage();
+        openMailPage();
         mailPage.setMail("dqzvyoml", "guerrillamail.com");
         mailPage.clickResetLink();
-        resetPasswordPage.inputDifferentPasswords(newPass, confirmDifferent);
-        resetPasswordPage.clickRest();
+        resetPasswordPage.resetPassword(newPass, confirmDifferent);
+        resetPasswordPage.clickReset();
     }
 
 }

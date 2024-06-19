@@ -1,10 +1,13 @@
 package testcases.Chapter10;
 
+import enums.RailwayTab;
 import model.User;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
+
+import static base.DriverManager.openHomePage;
 
 public class LoginTest extends BaseTest {
 
@@ -15,47 +18,46 @@ public class LoginTest extends BaseTest {
     private String invalidpassword = "1234";
 
     @Test(description = "User can log into Railway with valid username and password")
-    public void TC1() {
+    public void verifyValidInforLogin() {
         User user = new User(email, password);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
-        //BasePage.zoomIn(1.5);
         boolean isWelcomeDisplayed = homePage.isWelcomeUserDisplayed();
-        Assert.assertEquals(isWelcomeDisplayed, true, "Welcome user message does not display");
+        Assert.assertTrue(isWelcomeDisplayed, "Welcome user message does not display");
     }
 
     @Test(description = "User cannot login with blank \"Username\" textbox")
-    public void TC2() {
+    public void verifyBlankUserNameLogin() {
         User user = new User("", password);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
         loginPage.verifyLoginFailure("There was a problem with your login and/or errors exist in your form.");
     }
 
     @Test(description = "User cannot log into Railway with invalid password")
-    public void TC3() {
+    public void verifyInvalidPasswordLogin() {
         User user = new User(email, invalidpassword);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.verifyLoginFailure("There was a problem with your login and/or errors exist in your form.");
     }
 
     @Test(description = "System shows message when user enters wrong password many times")
-    public void TC4() {
+    public void verifyPasswordAttemptsMessage() {
         User user = new User(email, invalidpassword);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         handleLoginAttempts(user);
 
     }
 
     @Test(description = "User can't login with an account hasn't been activated")
-    public void TC5() {
+    public void verifyInactiveAccountLogin() {
         User user = new User(invalidemail, invalidpassword);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
         loginPage.verifyLoginFailure("Invalid username or password. Please try again.");
     }

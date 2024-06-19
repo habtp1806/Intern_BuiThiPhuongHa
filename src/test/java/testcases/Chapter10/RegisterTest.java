@@ -12,6 +12,7 @@ import testcases.base.BaseTest;
 
 import java.util.Set;
 
+import static base.DriverManager.*;
 import static org.testng.AssertJUnit.assertTrue;
 
 public class RegisterTest extends BaseTest {
@@ -21,17 +22,19 @@ public class RegisterTest extends BaseTest {
     private HomePage homePage = new HomePage();
 
     @Test(description = "User can't create account with an already in-use email")
-    public void TC7() {
-        basePage.openHomePage();
+    public void verifyUniqueEmailRegistration() {
+        openHomePage();
         basePage.clickTab("Register");
         registerPage.register(email, password, "123456789", "123456789");
-        registerPage.verifyRegisterFailure("This email address is already in use.");
+        String actualErrorMessage = registerPage.verifyRegisterFailure("This email address is already in use.");
+        String expectedErrorMessage = "This email address is already in use.";
+        Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "Error message does not match.");
 
     }
 
     @Test(description = "User can't create account while password and PID fields are empty")
-    public void TC8() {
-        basePage.openHomePage();
+    public void verifyEmptyFieldsRegistration() {
+        openHomePage();
         basePage.clickTab("Register");
         registerPage.register(email, "", "", "");
         registerPage.verifyRegisterFailure("There're errors in the form. Please correct the errors and try again.");
@@ -42,20 +45,20 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test(description = "User create and activate account")
-    public void TC9() {
-        basePage.openHomePage();
+    public void verifyAccountCreationActivation() {
+        openHomePage();
         assertTrue("Guide link is not present on the home page.", homePage.isGuideLinkPresent());
         basePage.clickLink("create an account");
-        String registerWindow = basePage.getWindowHandle();
+        String registerWindow = getWindowHandle();
         basePage.openNewTab(Config.getProperty("tempmail.url"));
         email = mailPage.getMail();
-        String mailWindow = basePage.getWindowHandle();
-        basePage.switchToWindow(registerWindow);
+        String mailWindow = getWindowHandle();
+        switchToWindow(registerWindow);
         basePage.clickTab("Register");
         registerPage.register(email, password, password, pid);
         assertTrue("Confirm message is not present after register successfully.", registerPage.isConfirmationSuccessful());
-        basePage.switchToWindow(mailWindow);
-        basePage.refreshPage();
+        switchToWindow(mailWindow);
+        refreshPage();
         mailPage.verifyMail();
         switchToNonMailWindow(registerWindow, mailWindow);
         assertTrue("Registration Confirmed! You can now log in to the site", registerPage.isConfirmationRegister());

@@ -2,6 +2,7 @@ package testcases;
 
 import base.DriverManager;
 import enums.RailwayStation;
+import enums.RailwayTab;
 import enums.SeatType;
 import model.BookTicket;
 import model.User;
@@ -15,9 +16,10 @@ import testcases.base.BaseTest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static base.DriverManager.*;
 import static org.testng.AssertJUnit.assertTrue;
 
-public class Chapter5_8Test extends BaseTest {
+public class Chapter5And8Test extends BaseTest {
 
     private RegisterPage registerPage = new RegisterPage();
     private MailPage mailPage = new MailPage();
@@ -37,14 +39,14 @@ public class Chapter5_8Test extends BaseTest {
     @BeforeMethod
     public void Register() throws Exception {
 
-        mailPage.openMailPage();
+        openMailPage();
         email = mailPage.getMail();
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        basePage.openHomePage();
-        basePage.clickTab("Register");
+        openHomePage();
+        basePage.clickTab(RailwayTab.REGISTER.getValue());
         registerPage.register(email, password, password, pid);
         mailPage.switchToEmail();
-        basePage.refreshPage();
+        refreshPage();
         mailPage.verifyMail();
     }
 
@@ -53,10 +55,10 @@ public class Chapter5_8Test extends BaseTest {
         User user = new User(email, password);
         BookTicket ticket = new BookTicket(bookingDate, null, null, null, "5");
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
-        basePage.clickTab("Timetable");
+        basePage.clickTab(RailwayTab.TIMETABLE.getValue());
         timeTablePage.clickCheckPrice(departStation, arriveStation);
         ticketPricePage.chooseTypeSeat(seatType);
         bookTicketPage.bookTicket(ticket);

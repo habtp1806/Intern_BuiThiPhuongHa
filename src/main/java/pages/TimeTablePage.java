@@ -9,20 +9,23 @@ import utils.SeleniumHelper;
 import static utils.SeleniumHelper.scrollToElement;
 
 public class TimeTablePage extends BasePage {
-    private String checkPriceXPath = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(text(),'check price')]";
-    private String bookTicketXPath = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(text(),'book ticket')]";
+  
+    private String actionXPath = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(text(),'%s')]";
+
+    private By getXPathForAction(String departure, String destination, String action) {
+        String xpathExpression = String.format(actionXPath, departure, destination, action);
+        return By.xpath(xpathExpression);
+    }
 
     public void clickCheckPrice(String departure, String destination) {
-        String xpathExpression = String.format(checkPriceXPath, departure, destination);
-        By checkPriceLocator = By.xpath(xpathExpression);
+        By checkPriceLocator = getXPathForAction(departure, destination, "check price");
         SeleniumHelper.scrollToElement(checkPriceLocator);
         SeleniumHelper.clickElement(checkPriceLocator);
     }
 
     public void clickBookTicket(String departure, String destination) {
-        String xpathExpression = String.format(bookTicketXPath, departure, destination);
-        By bookTicketLocator = By.xpath(xpathExpression);
-        scrollToElement(bookTicketLocator);
+        By bookTicketLocator = getXPathForAction(departure, destination, "book ticket");
+        SeleniumHelper.scrollToElement(bookTicketLocator);
         SeleniumHelper.clickElement(bookTicketLocator);
     }
 }

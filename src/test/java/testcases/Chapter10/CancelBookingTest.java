@@ -1,6 +1,7 @@
 package testcases.Chapter10;
 
 import enums.RailwayStation;
+import enums.RailwayTab;
 import enums.SeatType;
 import model.BookTicket;
 import model.User;
@@ -11,6 +12,8 @@ import testcases.base.BaseTest;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import static base.DriverManager.openHomePage;
+
 public class CancelBookingTest extends BaseTest {
     private BasePage basePage = new BasePage();
     private LoginPage loginPage = new LoginPage();
@@ -20,15 +23,15 @@ public class CancelBookingTest extends BaseTest {
 
 
     @Test(description = "User can cancel a ticket")
-    public void TC16() {
+    public void verifyCancelTicket() {
         BookTicket ticket = new BookTicket(bookingDate, RailwayStation.NHA_TRANG.getValue(), RailwayStation.SAI_GON.getValue(), SeatType.SOFT_SEAT_AIR_CONDITIONER.getValue(), "5");
         User user = new User(email, password);
-        basePage.openHomePage();
-        basePage.clickTab("Login");
+        openHomePage();
+        basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
-        basePage.clickTab("Book ticket");
+        basePage.clickTab(RailwayTab.BOOK_TICKET.getValue());
         bookTicketPage.bookTicket(ticket);
-        basePage.clickTab("My ticket");
+        basePage.clickTab(RailwayTab.MY_TICKET.getValue());
 
     }
 }

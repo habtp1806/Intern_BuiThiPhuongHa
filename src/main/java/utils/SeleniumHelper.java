@@ -8,14 +8,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
-import static pages.BasePage.waitForElementToBeVisible;
+import static base.DriverManager.waitForElementToBeVisible;
+
 
 public class SeleniumHelper {
-
-    public static void selectByText(By element, String text) {
-        Select select = new Select(findElement(element));
-        select.selectByVisibleText(text);
-    }
+    
 
     public static WebElement findElement(By element) {
         return DriverManager.driver.findElement(element);

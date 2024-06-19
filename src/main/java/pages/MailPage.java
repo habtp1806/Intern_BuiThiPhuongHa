@@ -10,23 +10,20 @@ import utils.SeleniumHelper;
 
 import java.time.Duration;
 
+import static base.DriverManager.waitForElementToBeVisible;
+
 public class MailPage extends BasePage {
-    private By confirmationEmail = By.xpath("//td[contains(text(), 'Please confirm')]");
-    private By resetEmail = By.xpath("//td[contains(text(), 'Please reset')]");
-    private By resetLink = By.xpath("//*[@class='email_body']//a[contains(@href,'PasswordReset')]");
-    private By confirmationLink = By.xpath("//a[contains(@href, 'saferailway')]");
-    private By emailLocator = By.xpath("//span[@id='inbox-id']");
-    private By emailExtension = By.xpath("//select[@id='gm-host-select']");
-    private By setBtn = By.xpath("//button[normalize-space()='Set']");
-    private By emailBox = By.xpath("//span[@id='inbox-id']/input[@type='text']");
+    private By confirmationEmailXPath = By.xpath("//td[contains(text(), 'Please confirm')]");
+    private By resetEmailXPath = By.xpath("//td[contains(text(), 'Please reset')]");
+    private By resetLinkXPath = By.xpath("//*[@class='email_body']//a[contains(@href,'PasswordReset')]");
+    private By confirmationLinkXPath = By.xpath("//a[contains(@href, 'saferailway')]");
+    private By emailBoxXPath = By.xpath("//span[@id='inbox-id']");
+    private By emailExtensionXPath = By.xpath("//select[@id='gm-host-select']");
+    private By setBtnXPath = By.xpath("//button[normalize-space()='Set']");
+    private By emailTxtBoxXPath = By.xpath("//span[@id='inbox-id']/input[@type='text']");
 
     private static String email;
 
-    public static void openMailPage() {
-        String mailUrl = Config.getProperty("tempmail.url");
-        DriverManager.driver.get(mailUrl);
-        //email = WebDriverConfig.driver.getWindowHandle();
-    }
 
     public void setMail(String name, String domain) {
         clickMailBox();
@@ -36,11 +33,11 @@ public class MailPage extends BasePage {
     }
 
     public void clickMailBox() {
-        SeleniumHelper.clickElement(emailLocator);
+        SeleniumHelper.clickElement(emailBoxXPath);
     }
 
     public void clickSetBtn() {
-        SeleniumHelper.clickElement(setBtn);
+        SeleniumHelper.clickElement(setBtnXPath);
     }
 
     public static void switchToEmail() {
@@ -48,34 +45,34 @@ public class MailPage extends BasePage {
     }
 
     public String getMail() {
-        WebElement emailElement = SeleniumHelper.findElement(emailBox);
+        WebElement emailElement = SeleniumHelper.findElement(emailTxtBoxXPath);
         String emailAddress = emailElement.getText() + "@guerrillamail.com";
         System.out.println("Temporary Email Address: " + emailAddress);
         return emailAddress;
     }
 
     public void enterMail(String email) {
-        SeleniumHelper.enterText(emailBox, email);
+        SeleniumHelper.enterText(emailTxtBoxXPath, email);
     }
 
     public void selectDomainMail(String domain) {
-        SeleniumHelper.selectByVisibleText(emailExtension, domain);
+        SeleniumHelper.selectByVisibleText(emailExtensionXPath, domain);
     }
 
     public void verifyMail() {
-        waitForElementToBeVisible(confirmationEmail, 50);
-        SeleniumHelper.clickElement(confirmationEmail);
+        waitForElementToBeVisible(confirmationEmailXPath, 50);
+        SeleniumHelper.clickElement(confirmationEmailXPath);
 
-        waitForElementToBeVisible(confirmationLink, 50);
-        SeleniumHelper.clickElement(confirmationLink);
+        waitForElementToBeVisible(confirmationLinkXPath, 50);
+        SeleniumHelper.clickElement(confirmationLinkXPath);
     }
 
     public void clickResetLink() {
-        waitForElementToBeVisible(resetEmail, 50);
-        SeleniumHelper.clickElement(resetEmail);
+        waitForElementToBeVisible(resetEmailXPath, 50);
+        SeleniumHelper.clickElement(resetEmailXPath);
 
         // Wait for the confirmation link to be visible and click it
-        waitForElementToBeVisible(resetLink, 50);
-        SeleniumHelper.clickElement(resetLink);
+        waitForElementToBeVisible(resetLinkXPath, 50);
+        SeleniumHelper.clickElement(resetLinkXPath);
     }
 }

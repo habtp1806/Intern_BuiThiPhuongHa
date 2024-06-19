@@ -7,18 +7,20 @@ import org.openqa.selenium.WebElement;
 import utils.SeleniumHelper;
 
 public class ResetPasswordPage {
-    private By newPassXPath = By.xpath("//input[@id='newPassword']");
-    private By confirmPassXPath = By.xpath("//input[@id='confirmPassword']");
-    private By resetTokenXPath = By.xpath("//input[@id='resetToken']");
     private By resetBtnXPath = By.xpath("//input[@title='Reset password']");
 
-    public void inputDifferentPasswords(String newPassword, String confirmPassword) {
-        SeleniumHelper.enterText(newPassXPath, newPassword);
-        SeleniumHelper.enterText(confirmPassXPath, confirmPassword);
-        clickRest();
+
+    private By getXPathByName(String name) {
+        return By.xpath(String.format("input[@id='%s']", name));
     }
 
-    public void clickRest() {
+    public void resetPassword(String newPassword, String confirmPassword) {
+        SeleniumHelper.enterText(getXPathByName("newPassword"), newPassword);
+        SeleniumHelper.enterText(getXPathByName("confirmPassword"), confirmPassword);
+        clickReset();
+    }
+
+    public void clickReset() {
         SeleniumHelper.scrollToElement(resetBtnXPath);
         SeleniumHelper.clickElement(resetBtnXPath);
     }

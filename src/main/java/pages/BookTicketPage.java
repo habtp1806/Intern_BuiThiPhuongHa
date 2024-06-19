@@ -1,5 +1,6 @@
 package pages;
 
+import base.Config;
 import base.DriverManager;
 import model.BookTicket;
 import org.openqa.selenium.By;
@@ -11,75 +12,61 @@ import utils.SeleniumHelper;
 import java.util.List;
 
 public class BookTicketPage extends BasePage {
-    private By departDateXPath = By.xpath("//select[@name='Date']");
-    private By ticketAmountXPath = By.xpath("//select[@name='TicketAmount']");
     private By bookTicketBtnXPath = By.xpath("//input[@value='Book ticket']");
     private By bookTicketTableXPath = By.xpath("//table[@class='MyTable WideTable']");
-    private By arriveAtXPath = By.xpath("//select[@name='ArriveStation']");
-    private By departFromXPath = By.xpath("//select[@name='DepartStation']");
-    private By typeSeatXPath = By.xpath("//select[@name='SeatType']");
 
     public void bookTicket(BookTicket ticket) {
 
-        if (ticket == null) {
-            throw new IllegalArgumentException("BookTicket object cannot be null");
-        }
 
-        if (ticket.getDepartDate() != null) {
-            selectDepartDate(ticket.getDepartDate());
-        }
-
-        if (ticket.getDepartFrom() != null) {
-            selectDepartFrom(ticket.getDepartFrom());
-        }
-
-
-        if (ticket.getSeatType() != null) {
-            selectTypeSeat(ticket.getSeatType());
-        }
-
-        if (ticket.getTicketAmount() != null) {
-            selectTicketAmount(ticket.getTicketAmount());
-        }
-        if (ticket.getArriveAt() != null) {
-            //  selectArriveAt(ticket.getArriveAt());
-            enterArriveAt(ticket.getArriveAt());
-        }
+        selectDepartDate(ticket.getDepartDate());
+        selectDepartFrom(ticket.getDepartFrom());
+        // selectTypeSeat(ticket.getSeatType());
+        enterTypeSeat(ticket.getSeatType());
+        selectTicketAmount(ticket.getTicketAmount());
+        //  selectArriveAt(ticket.getArriveAt());
+        enterArriveAt(ticket.getArriveAt());
         clickBookTicket();
         isConfirmationPage();
 
     }
 
+    private By getXPathByName(String name) {
+        return By.xpath(String.format("//select[@name='%s']", name));
+    }
+
     public void selectDepartDate(String date) {
-        SeleniumHelper.selectByVisibleText(departDateXPath, date);
+        SeleniumHelper.selectByVisibleText(getXPathByName("Date"), date);
     }
 
     public void selectTicketAmount(String amount) {
-        SeleniumHelper.selectByVisibleText(ticketAmountXPath, amount);
+        SeleniumHelper.selectByVisibleText(getXPathByName("TicketAmount"), amount);
     }
 
     public String getSelectedDepartDate() {
-        Select dateDropdown = new Select(DriverManager.driver.findElement(departDateXPath));
+        Select dateDropdown = new Select(DriverManager.driver.findElement(getXPathByName("Date")));
         return dateDropdown.getFirstSelectedOption().getText();
     }
 
     public void selectArriveAt(String arriveStation) {
-        SeleniumHelper.selectByVisibleText(arriveAtXPath, arriveStation);
+        SeleniumHelper.selectByVisibleText(getXPathByName("ArriveStation"), arriveStation);
     }
 
     public void enterArriveAt(String arriveStation) {
-        SeleniumHelper.enterText(arriveAtXPath, arriveStation);
+        SeleniumHelper.enterText(getXPathByName("ArriveStation"), arriveStation);
     }
 
     public void selectDepartFrom(String departStation) {
-        SeleniumHelper.selectByVisibleText(departFromXPath, departStation);
+        SeleniumHelper.selectByVisibleText(getXPathByName("DepartStation"), departStation);
     }
 
 
     public void selectTypeSeat(String seatType) {
-        SeleniumHelper.selectByVisibleText(typeSeatXPath, seatType);
+        SeleniumHelper.selectByVisibleText(getXPathByName("SeatType"), seatType);
     }
 
+    public void enterTypeSeat(String seatType) {
+        SeleniumHelper.enterText(getXPathByName("SeatType"), seatType);
+    }
 
     public void clickBookTicket() {
         SeleniumHelper.scrollToElement(bookTicketBtnXPath);

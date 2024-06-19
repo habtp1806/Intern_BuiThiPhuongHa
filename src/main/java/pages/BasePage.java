@@ -10,43 +10,32 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+
+import static base.DriverManager.waitForClickableElement;
 
 public class BasePage {
-    
+
     private static String railway;
 
-
-    public void openHomePage() {
-        String railwayUrl = Config.getProperty("railway.url");
-        DriverManager.driver.get(railwayUrl);
-        // railway = WebDriverConfig.driver.getWindowHandle();
-    }
 
     public static void switchToRailway() {
         DriverManager.driver.switchTo().window(railway);
     }
 
-    public void clickTab(String tabName) {
-        WebDriverWait wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(10));
+    public static void clickTab(String tabName) {
         String xpathExpression = String.format("//div[@id='menu']//li/a[span[text()='%s']]", tabName);
-        WebElement tabElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
+        WebElement tabElement = waitForClickableElement(xpathExpression);
         tabElement.click();
     }
 
-    public void clickLink(String linkName) {
-        WebDriverWait wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(10));
+
+    public static void clickLink(String linkName) {
         String xpathExpression = String.format("//a[normalize-space()='%s']", linkName);
-        WebElement tabElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
+        WebElement tabElement = waitForClickableElement(xpathExpression);
         tabElement.click();
     }
 
-    public static void refreshPage() {
-        DriverManager.driver.navigate().refresh();
-    }
-
-    public static void switchToWindow(String windowHandle) {
-        DriverManager.driver.switchTo().window(windowHandle);
-    }
 
     public static void openNewTab(String url) {
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
@@ -54,21 +43,9 @@ public class BasePage {
     }
 
 
-    public static String getWindowHandle() {
-        return DriverManager.driver.getWindowHandle();
-    }
-
-    public static void zoomIn(Double zoomNumber) {
-        ((JavascriptExecutor) DriverManager.driver).executeScript(java.lang.String.format("document.body.style.zoom = '%f'", zoomNumber));
-    }
-
-    public boolean isTabPresent(String tabName) {
-        return DriverManager.driver.findElements(By.linkText(tabName)).size() > 0;
-    }
-
-    public static void waitForElementToBeVisible(By locator, int timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(timeoutInSeconds));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public static boolean isTabDisplayed(String tabName) {
+        List<WebElement> tabs = DriverManager.driver.findElements(By.linkText(tabName));
+        return !tabs.isEmpty() && tabs.get(0).isDisplayed();
     }
 
 
