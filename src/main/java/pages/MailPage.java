@@ -21,6 +21,7 @@ public class MailPage extends BasePage {
     private By emailExtensionXPath = By.xpath("//select[@id='gm-host-select']");
     private By setBtnXPath = By.xpath("//button[normalize-space()='Set']");
     private By emailTxtBoxXPath = By.xpath("//span[@id='inbox-id']/input[@type='text']");
+    private By mailContentXPath = By.xpath("//div[@class='email_body']");
 
     private static String email;
 
@@ -45,7 +46,7 @@ public class MailPage extends BasePage {
     }
 
     public String getMail() {
-        WebElement emailElement = SeleniumHelper.findElement(emailTxtBoxXPath);
+        WebElement emailElement = SeleniumHelper.findElement(emailBoxXPath);
         String emailAddress = emailElement.getText() + "@guerrillamail.com";
         System.out.println("Temporary Email Address: " + emailAddress);
         return emailAddress;
@@ -66,6 +67,15 @@ public class MailPage extends BasePage {
         SeleniumHelper.clickElement(confirmationLinkXPath);
     }
 
+    public String getResetPasswordToken() {
+        String[] parts = SeleniumHelper.getElementText(mailContentXPath).split("The token is: ");
+        if (parts.length > 1) {
+            String[] tokenParts = parts[1].split("\\.");
+            return tokenParts[0].trim();
+        }
+        return "";
+    }
+
     public void clickResetLink() {
         waitForElementToBeVisible(resetEmailXPath, 50);
         SeleniumHelper.clickElement(resetEmailXPath);
@@ -74,4 +84,6 @@ public class MailPage extends BasePage {
         waitForElementToBeVisible(resetLinkXPath, 50);
         SeleniumHelper.clickElement(resetLinkXPath);
     }
+
+
 }

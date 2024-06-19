@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Set;
 
 import static base.DriverManager.waitForClickableElement;
 
@@ -36,6 +37,15 @@ public class BasePage {
         tabElement.click();
     }
 
+    public static void switchToRemainingTab(String windowHandleOfFirstTab, String windowHandleOfSecondTab) {
+        Set<String> allTabs = DriverManager.driver.getWindowHandles();
+        for (String tab : allTabs) {
+            if (!tab.equals(windowHandleOfFirstTab) && !tab.equals(windowHandleOfSecondTab)) {
+                DriverManager.driver.switchTo().window(tab);
+                break;
+            }
+        }
+    }
 
     public static void openNewTab(String url) {
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);

@@ -60,18 +60,10 @@ public class RegisterTest extends BaseTest {
         switchToWindow(mailWindow);
         refreshPage();
         mailPage.verifyMail();
-        switchToNonMailWindow(registerWindow, mailWindow);
+        basePage.switchToRemainingTab(registerWindow, mailWindow);
         assertTrue("Registration Confirmed! You can now log in to the site", registerPage.isConfirmationRegister());
 
     }
 
-    private void switchToNonMailWindow(String registerWindow, String mailWindow) {
-        Set<String> allTabs = DriverManager.driver.getWindowHandles();
-        for (String tab : allTabs) {
-            if (!tab.equals(mailWindow) && !tab.equals(registerWindow)) {
-                DriverManager.driver.switchTo().window(tab);
-                break;
-            }
-        }
-    }
+
 }

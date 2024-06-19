@@ -1,17 +1,23 @@
 package pages;
 
+import base.Config;
 import base.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import utils.SeleniumHelper;
 
+import static base.DriverManager.waitForElementToBeVisible;
+
 public class ResetPasswordPage {
     private By resetBtnXPath = By.xpath("//input[@title='Reset password']");
     private By resetTokenXPath = By.xpath("//input[@id='resetToken']");
+    private By formChangePasswordXpath = By.xpath("//form[//*[text()='Password Change Form']]");
+    private By messAboveXPath = By.xpath("//p[contains(@class,'message')]");
+    private By messNextTBoxXPath = By.xpath("//label[@for='confirmPassword' and @class='validation-error']");
 
     private By getXPathByName(String name) {
-        return By.xpath(String.format("input[@id='%s']", name));
+        return By.xpath(String.format("//input[@id='%s']", name));
     }
 
     public void resetPassword(String newPassword, String confirmPassword) {
@@ -20,12 +26,26 @@ public class ResetPasswordPage {
         clickReset();
     }
 
-    public String getResetTokenInTextBox() {
-        return SeleniumHelper.getAttributeValue(resetTokenXPath, "value");
+    public boolean isResetPasswordFormDisplayed() {
+        return SeleniumHelper.findElement(formChangePasswordXpath).isDisplayed();
     }
+
+    public String getResetTokenInTextBox() {
+        return SeleniumHelper.findElement(resetTokenXPath).getAttribute("value");
+    }
+
 
     public void clickReset() {
         SeleniumHelper.scrollToElement(resetBtnXPath);
         SeleniumHelper.clickElement(resetBtnXPath);
     }
+
+    public String getMessageAbove() {
+        return SeleniumHelper.getElementText(messAboveXPath);
+    }
+
+    public String getMessageNextToTextBox() {
+        return SeleniumHelper.getElementText(messNextTBoxXPath);
+    }
+
 }

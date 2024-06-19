@@ -32,7 +32,6 @@ public class DriverManager {
 
     }
 
-
     public static void openHomePage() {
         String railwayUrl = Config.getProperty("railway.url");
         DriverManager.driver.get(railwayUrl);

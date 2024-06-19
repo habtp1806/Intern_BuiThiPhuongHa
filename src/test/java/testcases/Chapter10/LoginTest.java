@@ -63,7 +63,7 @@ public class LoginTest extends BaseTest {
     }
 
     private void handleLoginAttempts(User user) {
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 5; i++) {
             loginPage.login(user);
             String expectedErrorMessage;
             if (i < 4) {
@@ -72,6 +72,7 @@ public class LoginTest extends BaseTest {
                 expectedErrorMessage = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
             }
             loginPage.verifyLoginFailure(expectedErrorMessage);
+            basePage.clickTab(RailwayTab.LOGIN.getValue()); // Điều hướng lại tab login cho lần thử tiếp theo
         }
     }
 }
