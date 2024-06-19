@@ -1,29 +1,31 @@
 package model;
 
+import enums.RailwayStation;
+import enums.SeatType;
+
 public class BookTicket {
     private String departDate;
-    private String departFrom;
-    private String arriveAt;
-    private String seatType;
+    private RailwayStation departStation;
+    private RailwayStation arrivalStation;
+    private SeatType seatType;
     private String ticketAmount;
 
     public BookTicket() {
         this.departDate = "";
-        this.departFrom = "";
-        this.arriveAt = "";
-        this.seatType = "";
+        this.departStation = null;
+        this.arrivalStation = null;
+        this.seatType = null;
         this.ticketAmount = "";
     }
 
     // Constructor with parameters
-    public BookTicket(String departDate, String departFrom, String arriveAt, String seatType, String ticketAmount) {
+    public BookTicket(String departDate, RailwayStation departStation, RailwayStation arrivalStation, SeatType seatType, String ticketAmount) {
         this.departDate = (departDate != null) ? departDate : "";
-        this.departFrom = (departFrom != null) ? departFrom : "";
-        this.arriveAt = (arriveAt != null) ? arriveAt : "";
-        this.seatType = (seatType != null) ? seatType : "";
-        this.ticketAmount = (ticketAmount != null) ? seatType : "";
+        this.departStation = departStation;
+        this.arrivalStation = arrivalStation;
+        this.seatType = seatType;
+        this.ticketAmount = (ticketAmount != null) ? ticketAmount : "";
     }
-
 
     public String getDepartDate() {
         return departDate;
@@ -33,27 +35,27 @@ public class BookTicket {
         this.departDate = departDate;
     }
 
-    public String getDepartFrom() {
-        return departFrom;
+    public RailwayStation getDepartStation() {
+        return departStation;
     }
 
-    public void setDepartFrom(String departFrom) {
-        this.departFrom = departFrom;
+    public void setDepartStation(RailwayStation departStation) {
+        this.departStation = departStation;
     }
 
-    public String getArriveAt() {
-        return arriveAt;
+    public RailwayStation getArrivalStation() {
+        return arrivalStation;
     }
 
-    public void setArriveAt(String arriveAt) {
-        this.arriveAt = arriveAt;
+    public void setArrivalStation(RailwayStation arrivalStation) {
+        this.arrivalStation = arrivalStation;
     }
 
-    public String getSeatType() {
+    public SeatType getSeatType() {
         return seatType;
     }
 
-    public void setSeatType(String seatType) {
+    public void setSeatType(SeatType seatType) {
         this.seatType = seatType;
     }
 

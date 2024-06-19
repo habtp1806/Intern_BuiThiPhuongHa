@@ -1,14 +1,11 @@
-package testcases;
+package testcases.Chapter;
 
 import base.DriverManager;
-import enums.RailwayStation;
 import enums.RailwayTab;
-import enums.SeatType;
 import model.BookTicket;
 import model.User;
 import org.openqa.selenium.WindowType;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;

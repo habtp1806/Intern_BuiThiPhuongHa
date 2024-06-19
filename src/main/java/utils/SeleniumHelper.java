@@ -12,7 +12,7 @@ import static base.DriverManager.waitForElementToBeVisible;
 
 
 public class SeleniumHelper {
-    
+
 
     public static WebElement findElement(By element) {
         return DriverManager.driver.findElement(element);
@@ -20,6 +20,10 @@ public class SeleniumHelper {
 
     public static String getElementText(By element) {
         return SeleniumHelper.findElement(element).getText();
+    }
+
+    public static String getAttributeValue(By element, String attribute) {
+        return SeleniumHelper.findElement(element).getAttribute(attribute);
     }
 
     public static void enterText(By locator, String text) {

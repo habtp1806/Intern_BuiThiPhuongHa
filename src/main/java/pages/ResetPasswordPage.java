@@ -8,7 +8,7 @@ import utils.SeleniumHelper;
 
 public class ResetPasswordPage {
     private By resetBtnXPath = By.xpath("//input[@title='Reset password']");
-
+    private By resetTokenXPath = By.xpath("//input[@id='resetToken']");
 
     private By getXPathByName(String name) {
         return By.xpath(String.format("input[@id='%s']", name));
@@ -18,6 +18,10 @@ public class ResetPasswordPage {
         SeleniumHelper.enterText(getXPathByName("newPassword"), newPassword);
         SeleniumHelper.enterText(getXPathByName("confirmPassword"), confirmPassword);
         clickReset();
+    }
+
+    public String getResetTokenInTextBox() {
+        return SeleniumHelper.getAttributeValue(resetTokenXPath, "value");
     }
 
     public void clickReset() {

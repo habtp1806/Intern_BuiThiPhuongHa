@@ -28,7 +28,7 @@ public class BookTicketTest extends BaseTest {
     @Test(description = "User can book 1 ticket at a time")
     public void verifyBookingATicket() {
         String nextDepartDate = DateUtils.calculateNextDepartDate(12);
-        BookTicket ticket = new BookTicket(nextDepartDate, RailwayStation.NHA_TRANG.getValue(), RailwayStation.HUE.getValue(), SeatType.SOFT_BED_AIR_CONDITIONER.getValue(), "1");
+        BookTicket ticket = new BookTicket(nextDepartDate, RailwayStation.NHA_TRANG, RailwayStation.HUE, SeatType.SOFT_BED_AIR_CONDITIONER, "1");
         openHomePage();
         basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
@@ -41,7 +41,7 @@ public class BookTicketTest extends BaseTest {
     @Test(description = "User can book many tickets at a time")
     public void verifyBookingMultipleTickets() {
         String nextDepartDate = DateUtils.calculateNextDepartDate(25);
-        BookTicket ticket = new BookTicket(nextDepartDate, RailwayStation.NHA_TRANG.getValue(), RailwayStation.SAI_GON.getValue(), SeatType.SOFT_SEAT_AIR_CONDITIONER.getValue(), "5");
+        BookTicket ticket = new BookTicket(nextDepartDate, RailwayStation.NHA_TRANG, RailwayStation.SAI_GON, SeatType.SOFT_SEAT_AIR_CONDITIONER, "5");
         openHomePage();
         basePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);

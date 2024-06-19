@@ -1,4 +1,4 @@
-package testcases;
+package testcases.Chapter;
 
 import base.DriverManager;
 import enums.RailwayStation;
@@ -29,7 +29,7 @@ public class Chapter3Test extends BaseTest {
     @Test
     public void chap3() {
         User user = new User(email, password);
-        BookTicket ticket = new BookTicket(null, null, RailwayStation.PHAN_THIET.getValue(), SeatType.SOFT_SEAT.getValue(), "2");
+        BookTicket ticket = new BookTicket(null, null, RailwayStation.PHAN_THIET, SeatType.SOFT_SEAT, "2");
         openMailPage();
         String originalWindowHandle = DriverManager.driver.getWindowHandle();
         email = mailPage.getMail();

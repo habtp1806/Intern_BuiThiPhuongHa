@@ -2,6 +2,8 @@ package pages;
 
 import base.Config;
 import base.DriverManager;
+import enums.RailwayStation;
+import enums.SeatType;
 import model.BookTicket;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -19,15 +21,14 @@ public class BookTicketPage extends BasePage {
 
 
         selectDepartDate(ticket.getDepartDate());
-        selectDepartFrom(ticket.getDepartFrom());
-        // selectTypeSeat(ticket.getSeatType());
+        selectDepartFrom(ticket.getDepartStation());
         enterTypeSeat(ticket.getSeatType());
         selectTicketAmount(ticket.getTicketAmount());
-        //  selectArriveAt(ticket.getArriveAt());
-        enterArriveAt(ticket.getArriveAt());
+        enterArriveAt(ticket.getArrivalStation());
         clickBookTicket();
         isConfirmationPage();
-
+        // selectTypeSeat(ticket.getSeatType());
+        //  selectArriveAt(ticket.getArriveAt());
     }
 
     private By getXPathByName(String name) {
@@ -47,25 +48,25 @@ public class BookTicketPage extends BasePage {
         return dateDropdown.getFirstSelectedOption().getText();
     }
 
-    public void selectArriveAt(String arriveStation) {
-        SeleniumHelper.selectByVisibleText(getXPathByName("ArriveStation"), arriveStation);
+    public void selectArriveAt(RailwayStation arriveStation) {
+        SeleniumHelper.selectByVisibleText(getXPathByName("ArriveStation"), arriveStation.getValue());
     }
 
-    public void enterArriveAt(String arriveStation) {
-        SeleniumHelper.enterText(getXPathByName("ArriveStation"), arriveStation);
+    public void enterArriveAt(RailwayStation arriveStation) {
+        SeleniumHelper.enterText(getXPathByName("ArriveStation"), arriveStation.getValue());
     }
 
-    public void selectDepartFrom(String departStation) {
-        SeleniumHelper.selectByVisibleText(getXPathByName("DepartStation"), departStation);
+    public void selectDepartFrom(RailwayStation departStation) {
+        SeleniumHelper.selectByVisibleText(getXPathByName("DepartStation"), departStation.getValue());
     }
 
 
-    public void selectTypeSeat(String seatType) {
-        SeleniumHelper.selectByVisibleText(getXPathByName("SeatType"), seatType);
+    public void selectTypeSeat(SeatType seatType) {
+        SeleniumHelper.selectByVisibleText(getXPathByName("SeatType"), seatType.getValue());
     }
 
-    public void enterTypeSeat(String seatType) {
-        SeleniumHelper.enterText(getXPathByName("SeatType"), seatType);
+    public void enterTypeSeat(SeatType seatType) {
+        SeleniumHelper.enterText(getXPathByName("SeatType"), seatType.getValue());
     }
 
     public void clickBookTicket() {
@@ -85,7 +86,6 @@ public class BookTicketPage extends BasePage {
     }
 
     public boolean verifySelectedBooking(String from, String to, String seatType, String bookingDate, String expriedDate, String amount) {
-        // get infor of table
         WebElement table = DriverManager.driver.findElement(bookTicketTableXPath);
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (WebElement row : rows) {
@@ -99,15 +99,7 @@ public class BookTicketPage extends BasePage {
                 String actualBookingDate = cells.get(4).getText();
                 String actualExpriedDate = cells.get(5).getText();
                 String actualAmount = cells.get(6).getText();
-                // String actualToatal = cells.get(7).getText();
-                System.out.println("Actual Depart Station: " + actualDepartStation);
-                System.out.println("Actual Arrive Station: " + actualArriveStation);
-                System.out.println("Actual Seat Type: " + actualSeatType);
-                //  System.out.println("Actual Depart Date: " + actualDepartDate);
-                System.out.println("Actual Booking Date: " + actualBookingDate);
-                System.out.println("Actual Expired Date: " + actualExpriedDate);
-                System.out.println("Actual Amount: " + actualAmount);
-                //  System.out.println("Actual Total: " + actualTotal);
+
                 if ((from == null || actualDepartStation.equals(from)) &&
                         (to == null || actualArriveStation.equals(to)) &&
                         (seatType == null || actualSeatType.equals(seatType)) &&

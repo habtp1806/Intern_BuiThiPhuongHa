@@ -62,7 +62,6 @@ public class MailPage extends BasePage {
     public void verifyMail() {
         waitForElementToBeVisible(confirmationEmailXPath, 50);
         SeleniumHelper.clickElement(confirmationEmailXPath);
-
         waitForElementToBeVisible(confirmationLinkXPath, 50);
         SeleniumHelper.clickElement(confirmationLinkXPath);
     }
