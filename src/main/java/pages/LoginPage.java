@@ -10,8 +10,8 @@ import utils.SeleniumHelper;
 
 public class LoginPage extends BasePage {
 
-    private By loginBtnXPath = By.xpath("//input[@title='Login']");
-    private By messFailXPath = By.xpath("//p[@class='message error LoginForm']");
+    private final By loginBtnXPath = By.xpath("//input[@title='Login']");
+    private final By messFailXPath = By.xpath("//p[@class='message error LoginForm']");
     private static String railway;
 
     private By getXPathByName(String name) {

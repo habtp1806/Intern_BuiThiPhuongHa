@@ -9,9 +9,9 @@ import utils.SeleniumHelper;
 
 public class TicketPricePage {
 
-    private String seatXPath = "//*[@id='content']/table/tbody/tr[td[text()='%s']]//a[@class='BoxLink'][normalize-space()='Book ticket']";
-    private String titleTicketPriceXPath = "//th[contains(text(),'Ticket price from %s to %s')]";
-    private String priceSeatTypeXPath = "//table[@class='MyTable MedTable']//th[normalize-space()='Price (VND)']//following-sibling::td[count(//td[text()='%s']/preceding-sibling::td)+1]";
+    private final String seatXPath = "//*[@id='content']/table/tbody/tr[td[text()='%s']]//a[@class='BoxLink'][normalize-space()='Book ticket']";
+    private final String titleTicketPriceXPath = "//th[contains(text(),'Ticket price from %s to %s')]";
+    private final String priceSeatTypeXPath = "//table[@class='MyTable MedTable']//th[normalize-space()='Price (VND)']//following-sibling::td[count(//td[text()='%s']/preceding-sibling::td)+1]";
 
     public void chooseTypeSeat(String typeSeat) {
         String xpathExpression = String.format(seatXPath, typeSeat);

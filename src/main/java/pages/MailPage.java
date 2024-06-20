@@ -13,15 +13,15 @@ import java.time.Duration;
 import static base.DriverManager.waitForElementToBeVisible;
 
 public class MailPage extends BasePage {
-    private By confirmationEmailXPath = By.xpath("//td[contains(text(), 'Please confirm')]");
-    private By resetEmailXPath = By.xpath("//td[contains(text(), 'Please reset')]");
-    private By resetLinkXPath = By.xpath("//*[@class='email_body']//a[contains(@href,'PasswordReset')]");
-    private By confirmationLinkXPath = By.xpath("//a[contains(@href, 'saferailway')]");
-    private By emailBoxXPath = By.xpath("//span[@id='inbox-id']");
-    private By emailExtensionXPath = By.xpath("//select[@id='gm-host-select']");
-    private By setBtnXPath = By.xpath("//button[normalize-space()='Set']");
-    private By emailTxtBoxXPath = By.xpath("//span[@id='inbox-id']/input[@type='text']");
-    private By mailContentXPath = By.xpath("//div[@class='email_body']");
+    private final By confirmationEmailXPath = By.xpath("//td[contains(text(), 'Please confirm')]");
+    private final By resetEmailXPath = By.xpath("//td[contains(text(), 'Please reset')]");
+    private final By resetLinkXPath = By.xpath("//*[@class='email_body']//a[contains(@href,'PasswordReset')]");
+    private final By confirmationLinkXPath = By.xpath("//a[contains(@href, 'saferailway')]");
+    private final By emailBoxXPath = By.xpath("//span[@id='inbox-id']");
+    private final By emailExtensionXPath = By.xpath("//select[@id='gm-host-select']");
+    private final By setBtnXPath = By.xpath("//button[normalize-space()='Set']");
+    private final By emailTxtBoxXPath = By.xpath("//span[@id='inbox-id']/input[@type='text']");
+    private final By mailContentXPath = By.xpath("//div[@class='email_body']");
 
     private static String email;
 
@@ -60,7 +60,7 @@ public class MailPage extends BasePage {
         SeleniumHelper.selectByVisibleText(emailExtensionXPath, domain);
     }
 
-    public void verifyMail() {
+    public void getConFirmLinkMail() {
         waitForElementToBeVisible(confirmationEmailXPath, 50);
         SeleniumHelper.clickElement(confirmationEmailXPath);
         waitForElementToBeVisible(confirmationLinkXPath, 50);

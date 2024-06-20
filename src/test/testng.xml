@@ -3,11 +3,12 @@
 <suite name="HelloSelenium" verbose="1">
     <test name="sample test">
         <classes>
-            <class name="testcases.Chapter5_8Test">
-                <methods>
-                    <include name="bookTicket"/>
-                </methods>
-            </class>
+            <class name="testcases.Chapter10.RegisterTest"/>
+            <class name="testcases.Chapter10.LoginTest"/>
+            <class name="testcases.Chapter10.BookTicketTest"/>
+            <class name="testcases.Chapter10.CancelBookingTest"/>
+            <class name="testcases.Chapter10.LogoutTest"/>
+            <class name="testcases.Chapter10.ResetPasswordTest"/>
         </classes>
     </test>
 </suite>

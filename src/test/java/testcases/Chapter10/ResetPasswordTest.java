@@ -11,55 +11,55 @@ import testcases.base.BaseTest;
 import static base.DriverManager.*;
 
 public class ResetPasswordTest extends BaseTest {
-    private MailPage mailPage = new MailPage();
-    private BasePage basePage = new BasePage();
-    private LoginPage loginPage = new LoginPage();
-    private ForgotPassPage forgotPassPage = new ForgotPassPage();
-    private ResetPasswordPage resetPasswordPage = new ResetPasswordPage();
-    private String newPass = "1234567890";
-    private String confirmDifferent = "1234567899";
+    private final MailPage mailPage = new MailPage();
+    private final BasePage basePage = new BasePage();
+    private final LoginPage loginPage = new LoginPage();
+    private final ForgotPassPage forgotPassPage = new ForgotPassPage();
+    private final ResetPasswordPage resetPasswordPage = new ResetPasswordPage();
+    private final String newPass = "1234567890";
+    private final String confirmDifferent = "1234567899";
 
     @Test(description = "Reset password shows error if the new password is same as current")
     public void verifyPasswordResetError() {
-        openHomePage();
+        navigateToRailWay();
         String railwayWindow = getWindowHandle();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
-        basePage.clickLink("Forgot Password page");
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
+        BasePage.clickLink("Forgot Password page");
         forgotPassPage.sendForgotPass(email);
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        openMailPage();
+        navigateToRailWay();
         String mailWindow = getWindowHandle();
         mailPage.setMail("dqzvyoml", "guerrillamail.com");
         mailPage.clickResetLink();
         String token = mailPage.getResetPasswordToken();
-        basePage.switchToRemainingTab(mailWindow, railwayWindow);
+        BasePage.switchToRemainingTab(mailWindow, railwayWindow);
         Assert.assertTrue(resetPasswordPage.isResetPasswordFormDisplayed(), "Change password form does not displayed");
         Assert.assertEquals(resetPasswordPage.getResetTokenInTextBox(), token, "Reset token does not match");
         resetPasswordPage.resetPassword(newPass, newPass);
         resetPasswordPage.clickReset();
-        Assert.assertEquals(resetPasswordPage.getMessageAbove(), "The new password cannot be the same with the current password");
+        Assert.assertEquals(resetPasswordPage.getMessageAboveForm(), "The new password cannot be the same with the current password");
     }
 
     @Test(description = "Reset password shows error if the new password and confirm password doesn't match")
     public void verifyPassWordMatch() {
-        openHomePage();
+        navigateToRailWay();
         String railwayWindow = getWindowHandle();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
-        basePage.clickLink("Forgot Password page");
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
+        BasePage.clickLink("Forgot Password page");
         forgotPassPage.sendForgotPass(email);
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        openMailPage();
+        navigateToRailWay();
         String mailWindow = getWindowHandle();
         mailPage.setMail("dqzvyoml", "guerrillamail.com");
         mailPage.clickResetLink();
         String token = mailPage.getResetPasswordToken();
-        basePage.switchToRemainingTab(mailWindow, railwayWindow);
+        BasePage.switchToRemainingTab(mailWindow, railwayWindow);
         Assert.assertTrue(resetPasswordPage.isResetPasswordFormDisplayed(), "Change password form does not displayed");
         Assert.assertEquals(resetPasswordPage.getResetTokenInTextBox(), token, "Reset token does not match");
         resetPasswordPage.resetPassword(newPass, "1234567899");
         resetPasswordPage.clickReset();
         Assert.assertEquals(resetPasswordPage.getMessageNextToTextBox(), "The password confirmation did not match the new password.");
-        Assert.assertEquals(resetPasswordPage.getMessageAbove(), "Could not reset password. Please correct the errors and try again.");
+        Assert.assertEquals(resetPasswordPage.getMessageAboveForm(), "Could not reset password. Please correct the errors and try again.");
 
     }
 }

@@ -20,21 +20,17 @@ public class BasePage {
     private static String railway;
 
 
-    public static void switchToRailway() {
-        DriverManager.driver.switchTo().window(railway);
-    }
-
     public static void clickTab(String tabName) {
         String xpathExpression = String.format("//div[@id='menu']//li/a[span[text()='%s']]", tabName);
-        WebElement tabElement = waitForClickableElement(xpathExpression);
-        tabElement.click();
+        waitForClickableElement(xpathExpression);
+        DriverManager.driver.findElement(By.xpath(xpathExpression)).click();
     }
 
 
     public static void clickLink(String linkName) {
         String xpathExpression = String.format("//a[normalize-space()='%s']", linkName);
-        WebElement tabElement = waitForClickableElement(xpathExpression);
-        tabElement.click();
+        waitForClickableElement(xpathExpression);
+        DriverManager.driver.findElement(By.xpath(xpathExpression)).click();
     }
 
     public static void switchToRemainingTab(String windowHandleOfFirstTab, String windowHandleOfSecondTab) {

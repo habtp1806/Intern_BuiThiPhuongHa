@@ -11,40 +11,39 @@ import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
 
-import static base.DriverManager.openHomePage;
-import static base.DriverManager.openMailPage;
+import static base.DriverManager.*;
 
 public class Chapter3Test extends BaseTest {
-    private RegisterPage registerPage = new RegisterPage();
-    private MailPage mailPage = new MailPage();
-    private BasePage basePage = new BasePage();
-    private LoginPage loginPage = new LoginPage();
-    private TicketPricePage ticketPricePage = new TicketPricePage();
-    private BookTicketPage bookTicketPage = new BookTicketPage();
+    private final RegisterPage registerPage = new RegisterPage();
+    private final MailPage mailPage = new MailPage();
+    private final BasePage basePage = new BasePage();
+    private final LoginPage loginPage = new LoginPage();
+    private final TicketPricePage ticketPricePage = new TicketPricePage();
+    private final BookTicketPage bookTicketPage = new BookTicketPage();
     private String email;
-    private String password = "123456789";
-    private String amount = "2";
-    private String arriveAt = "Phan Thiết";
+    private final String password = "123456789";
+    private final String amount = "2";
+    private final String arriveAt = "Phan Thiết";
 
     @Test
     public void chap3() {
         User user = new User(email, password);
         BookTicket ticket = new BookTicket(null, null, RailwayStation.PHAN_THIET, SeatType.SOFT_SEAT, "2");
-        openMailPage();
+        navigateToRailWay();
         String originalWindowHandle = DriverManager.driver.getWindowHandle();
         email = mailPage.getMail();
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        openHomePage();
-        basePage.clickTab(RailwayTab.REGISTER.getValue());
+        navigateToRailWay();
+        BasePage.clickTab(RailwayTab.REGISTER.getValue());
         registerPage.register(email, password, password, password);
         DriverManager.driver.switchTo().window(originalWindowHandle);
         DriverManager.driver.navigate().refresh();
-        mailPage.verifyMail();
+        mailPage.getConFirmLinkMail();
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        openHomePage();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
+        navigateToRailWay();
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
-        basePage.clickTab(RailwayTab.BOOK_TICKET.getValue());
+        BasePage.clickTab(RailwayTab.BOOK_TICKET.getValue());
         bookTicketPage.bookTicket(ticket);
     }
 

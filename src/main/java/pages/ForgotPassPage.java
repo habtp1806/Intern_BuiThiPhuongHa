@@ -6,8 +6,8 @@ import org.openqa.selenium.WebElement;
 import utils.SeleniumHelper;
 
 public class ForgotPassPage {
-    private By emailXPath = By.xpath("//input[@id='email']");
-    private By sendBtnXPath = By.xpath("//input[@value='Send Instructions']");
+    private final By emailXPath = By.xpath("//input[@id='email']");
+    private final By sendBtnXPath = By.xpath("//input[@value='Send Instructions']");
 
     public void sendForgotPass(String email) {
         enterEmail(email);

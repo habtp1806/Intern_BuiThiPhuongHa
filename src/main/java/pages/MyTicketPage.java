@@ -1,5 +1,6 @@
 package pages;
 
+import base.Config;
 import base.DriverManager;
 import model.BookTicket;
 import org.openqa.selenium.By;
@@ -11,7 +12,7 @@ import utils.SeleniumHelper;
 import java.time.Duration;
 
 public class MyTicketPage {
-    private String xpathTicket = "//table[@class='MyTable']//tr[td[text()='%s' and following-sibling::td[text()='%s'" +
+    private final String xpathTicket = "//table[@class='MyTable']//tr[td[text()='%s' and following-sibling::td[text()='%s'" +
             " and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' " +
             "and following-sibling::td[text()='%s']]]]]]//input[contains(@onclick, 'Delete')]";
 
@@ -32,9 +33,10 @@ public class MyTicketPage {
                 ticket.getSeatType().getValue(),
                 ticket.getDepartDate(),
                 ticket.getTicketAmount());
-
-        WebDriverWait wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(10));
-        WebElement element = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathTicket)));
+        By locator = By.xpath(xpathTicket);
+        int timeoutInSeconds = Config.getTimeInSeconds("timeout");
+        DriverManager.waitForElementToBeVisible(locator, timeoutInSeconds);
+        WebElement element = DriverManager.driver.findElement(locator);
         return !element.isDisplayed();
     }
 }

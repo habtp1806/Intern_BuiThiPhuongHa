@@ -14,21 +14,17 @@ import utils.SeleniumHelper;
 import java.util.List;
 
 public class BookTicketPage extends BasePage {
-    private By bookTicketBtnXPath = By.xpath("//input[@value='Book ticket']");
-    private By bookTicketTableXPath = By.xpath("//table[@class='MyTable WideTable']");
+    private final By bookTicketBtnXPath = By.xpath("//input[@value='Book ticket']");
+    private final By bookTicketTableXPath = By.xpath("//table[@class='MyTable WideTable']");
 
     public void bookTicket(BookTicket ticket) {
-
-
         selectDepartDate(ticket.getDepartDate());
         selectDepartFrom(ticket.getDepartStation());
         enterTypeSeat(ticket.getSeatType());
         selectTicketAmount(ticket.getTicketAmount());
         enterArriveAt(ticket.getArrivalStation());
         clickBookTicket();
-        isConfirmationPage();
-        // selectTypeSeat(ticket.getSeatType());
-        //  selectArriveAt(ticket.getArriveAt());
+        isConfirmationPageDisplayed();
     }
 
     private By getXPathByName(String name) {
@@ -79,7 +75,7 @@ public class BookTicketPage extends BasePage {
     }
 
 
-    public boolean isConfirmationPage() {
+    public boolean isConfirmationPageDisplayed() {
         String expectedTitle = "Confirmation Page Title";
         String actualTitle = getPageTitle();
         return actualTitle.equals(expectedTitle);

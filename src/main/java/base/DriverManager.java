@@ -32,27 +32,28 @@ public class DriverManager {
 
     }
 
-    public static void openHomePage() {
+    public static void navigateToRailWay() {
         String railwayUrl = Config.getProperty("railway.url");
         DriverManager.driver.get(railwayUrl);
         // railway = WebDriverConfig.driver.getWindowHandle();
     }
 
-    public static void openMailPage() {
+    public static void navigateToMailPage() {
         String mailUrl = Config.getProperty("tempmail.url");
         DriverManager.driver.get(mailUrl);
         //email = WebDriverConfig.driver.getWindowHandle();
     }
+    
 
     public static void waitForElementToBeVisible(By locator, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(timeoutInSeconds));
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static WebElement waitForClickableElement(String xpathExpression) {
+    public static void waitForClickableElement(String xpathExpression) {
         int timeoutInSeconds = Config.getTimeInSeconds("timeout");
         WebDriverWait wait = new WebDriverWait(DriverManager.driver, Duration.ofSeconds(timeoutInSeconds));
-        return wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
     }
 
     public static void refreshPage() {

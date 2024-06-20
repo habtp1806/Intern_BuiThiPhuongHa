@@ -9,8 +9,8 @@ import utils.SeleniumHelper;
 import static utils.SeleniumHelper.scrollToElement;
 
 public class TimeTablePage extends BasePage {
-  
-    private String actionXPath = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(text(),'%s')]";
+
+    private final String actionXPath = "//tr[td[text()='%s' and following-sibling::td[text()='%s']]]//a[contains(text(),'%s')]";
 
     private By getXPathForAction(String departure, String destination, String action) {
         String xpathExpression = String.format(actionXPath, departure, destination, action);

@@ -7,21 +7,22 @@ import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
 
-import static base.DriverManager.openHomePage;
+import static base.DriverManager.navigateToRailWay;
+
 
 public class LoginTest extends BaseTest {
 
-    private BasePage basePage = new BasePage();
-    private LoginPage loginPage = new LoginPage();
-    private HomePage homePage = new HomePage();
-    private String invalidemail = "abc";
-    private String invalidpassword = "1234";
+    private final BasePage basePage = new BasePage();
+    private final LoginPage loginPage = new LoginPage();
+    private final HomePage homePage = new HomePage();
+    private final String invalidemail = "abc";
+    private final String invalidpassword = "1234";
 
     @Test(description = "User can log into Railway with valid username and password")
     public void verifyValidInforLogin() {
         User user = new User(email, password);
-        openHomePage();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
+        navigateToRailWay();
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
         boolean isWelcomeDisplayed = homePage.isWelcomeUserDisplayed();
         Assert.assertTrue(isWelcomeDisplayed, "Welcome user message does not display");
@@ -30,8 +31,8 @@ public class LoginTest extends BaseTest {
     @Test(description = "User cannot login with blank \"Username\" textbox")
     public void verifyBlankUserNameLogin() {
         User user = new User("", password);
-        openHomePage();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
+        navigateToRailWay();
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
         loginPage.verifyLoginFailure("There was a problem with your login and/or errors exist in your form.");
     }
@@ -39,16 +40,16 @@ public class LoginTest extends BaseTest {
     @Test(description = "User cannot log into Railway with invalid password")
     public void verifyInvalidPasswordLogin() {
         User user = new User(email, invalidpassword);
-        openHomePage();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
+        navigateToRailWay();
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.verifyLoginFailure("There was a problem with your login and/or errors exist in your form.");
     }
 
     @Test(description = "System shows message when user enters wrong password many times")
     public void verifyPasswordAttemptsMessage() {
         User user = new User(email, invalidpassword);
-        openHomePage();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
+        navigateToRailWay();
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
         handleLoginAttempts(user);
 
     }
@@ -56,8 +57,8 @@ public class LoginTest extends BaseTest {
     @Test(description = "User can't login with an account hasn't been activated")
     public void verifyInactiveAccountLogin() {
         User user = new User(invalidemail, invalidpassword);
-        openHomePage();
-        basePage.clickTab(RailwayTab.LOGIN.getValue());
+        navigateToRailWay();
+        BasePage.clickTab(RailwayTab.LOGIN.getValue());
         loginPage.login(user);
         loginPage.verifyLoginFailure("Invalid username or password. Please try again.");
     }
@@ -72,7 +73,7 @@ public class LoginTest extends BaseTest {
                 expectedErrorMessage = "You have used 4 out of 5 login attempts. After all 5 have been used, you will be unable to login for 15 minutes.";
             }
             loginPage.verifyLoginFailure(expectedErrorMessage);
-            basePage.clickTab(RailwayTab.LOGIN.getValue()); // Điều hướng lại tab login cho lần thử tiếp theo
+            BasePage.clickTab(RailwayTab.LOGIN.getValue()); // Điều hướng lại tab login cho lần thử tiếp theo
         }
     }
 }

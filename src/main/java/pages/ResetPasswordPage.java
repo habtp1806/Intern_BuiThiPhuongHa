@@ -10,11 +10,11 @@ import utils.SeleniumHelper;
 import static base.DriverManager.waitForElementToBeVisible;
 
 public class ResetPasswordPage {
-    private By resetBtnXPath = By.xpath("//input[@title='Reset password']");
-    private By resetTokenXPath = By.xpath("//input[@id='resetToken']");
-    private By formChangePasswordXpath = By.xpath("//form[//*[text()='Password Change Form']]");
-    private By messAboveXPath = By.xpath("//p[contains(@class,'message')]");
-    private By messNextTBoxXPath = By.xpath("//label[@for='confirmPassword' and @class='validation-error']");
+    private final By resetBtnXPath = By.xpath("//input[@title='Reset password']");
+    private final By resetTokenXPath = By.xpath("//input[@id='resetToken']");
+    private final By formChangePasswordXpath = By.xpath("//form[//*[text()='Password Change Form']]");
+    private final By messAboveXPath = By.xpath("//p[contains(@class,'message')]");
+    private final By messNextTBoxXPath = By.xpath("//label[@for='confirmPassword' and @class='validation-error']");
 
     private By getXPathByName(String name) {
         return By.xpath(String.format("//input[@id='%s']", name));
@@ -40,7 +40,7 @@ public class ResetPasswordPage {
         SeleniumHelper.clickElement(resetBtnXPath);
     }
 
-    public String getMessageAbove() {
+    public String getMessageAboveForm() {
         return SeleniumHelper.getElementText(messAboveXPath);
     }
 

@@ -10,16 +10,16 @@ import utils.SeleniumHelper;
 import static base.DriverManager.waitForElementToBeVisible;
 
 public class RegisterPage extends BasePage {
-    private By emailtxtXPath = By.id("email");
-    private By passwordtxtXPath = By.id("password");
-    private By confirmPassXPath = By.id("confirmPassword");
-    private By pidXPath = By.id("pid");
-    private By registerBtnXPath = By.xpath("//input[@title='Register']");
-    private By messErrorXPath = By.xpath(" //p[@class='message error']");
-    private By passwordMessXPath = By.xpath("//label[normalize-space()='Invalid password length']");
-    private By pidMessXPath = By.xpath("//label[normalize-space()='Invalid ID length']");
-    private By confirmMessXPath = By.xpath("//h1[normalize-space()='Thank you for registering your account']");
-    private By confirmRegisterXPath = By.xpath("//p[contains(text(),'Registration Confirmed! You can now log in to the ')]");
+    private final By emailtxtXPath = By.id("email");
+    private final By passwordtxtXPath = By.id("password");
+    private final By confirmPassXPath = By.id("confirmPassword");
+    private final By pidXPath = By.id("pid");
+    private final By registerBtnXPath = By.xpath("//input[@title='Register']");
+    private final By messErrorXPath = By.xpath(" //p[@class='message error']");
+    private final By passwordMessXPath = By.xpath("//label[normalize-space()='Invalid password length']");
+    private final By pidMessXPath = By.xpath("//label[normalize-space()='Invalid ID length']");
+    private final By confirmMessXPath = By.xpath("//h1[normalize-space()='Thank you for registering your account']");
+    private final By confirmRegisterXPath = By.xpath("//p[contains(text(),'Registration Confirmed! You can now log in to the ')]");
 
     public void register(String email, String password, String confirmPass, String pidNumber) {
         enterEmail(email);
