@@ -1,30 +1,51 @@
 package pages;
 
-import base.WebDriverConfig;
+import base.Config;
+import base.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import utils.SeleniumHelper;
+
+import static base.DriverManager.waitForElementToBeVisible;
 
 public class ResetPasswordPage {
-    private By newPass = By.xpath("//input[@id='newPassword']");
-    private By confirmPass = By.xpath("//input[@id='confirmPassword']");
-    private By resetToken = By.xpath("//input[@id='resetToken']");
-    private By resetBtn = By.xpath("//input[@title='Reset password']");
+    private final By resetBtnXPath = By.xpath("//input[@title='Reset password']");
+    private final By resetTokenXPath = By.xpath("//input[@id='resetToken']");
+    private final By formChangePasswordXpath = By.xpath("//form[//*[text()='Password Change Form']]");
+    private final By messAboveXPath = By.xpath("//p[contains(@class,'message')]");
+    private final By messNextTBoxXPath = By.xpath("//label[@for='confirmPassword' and @class='validation-error']");
 
-    public void inputDifferentPasswords(String newPassword, String confirmPassword) {
-        WebElement newPasswordField = WebDriverConfig.driver.findElement(By.id("newPass"));
-        newPasswordField.sendKeys(newPassword);
-
-        WebElement confirmPasswordField = WebDriverConfig.driver.findElement(By.id("confirmPass"));
-        confirmPasswordField.sendKeys(confirmPassword);
+    private By getXPathByName(String name) {
+        return By.xpath(String.format("//input[@id='%s']", name));
     }
 
-    public void clickRest() {
-        WebElement resetButton = WebDriverConfig.driver.findElement(resetBtn);
-        if (resetButton.isDisplayed()) {
-            ((JavascriptExecutor) WebDriverConfig.driver).executeScript("arguments[0].scrollIntoView(true);", resetButton);
-
-            resetButton.click();
-        }
+    public void resetPassword(String newPassword, String confirmPassword) {
+        SeleniumHelper.enter(getXPathByName("newPassword"), newPassword);
+        SeleniumHelper.enter(getXPathByName("confirmPassword"), confirmPassword);
+        clickReset();
     }
+
+    public boolean isResetPasswordFormDisplayed() {
+        return SeleniumHelper.findElement(formChangePasswordXpath).isDisplayed();
+    }
+
+    public String getResetTokenInTextBox() {
+        return SeleniumHelper.findElement(resetTokenXPath).getAttribute("value");
+    }
+
+
+    public void clickReset() {
+        SeleniumHelper.scrollToElement(resetBtnXPath);
+        SeleniumHelper.clickElement(resetBtnXPath);
+    }
+
+    public String getMessageAboveForm() {
+        return SeleniumHelper.getElementText(messAboveXPath);
+    }
+
+    public String getMessageNextToTextBox() {
+        return SeleniumHelper.getElementText(messNextTBoxXPath);
+    }
+
 }

@@ -1,31 +1,30 @@
 package pages;
 
 import base.Config;
-import base.WebDriverConfig;
+import base.DriverManager;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.SeleniumHelper;
 
 import java.time.Duration;
 
-public class MailPage {
-    private By confirmationEmail = By.xpath("//td[contains(text(), 'Please confirm')]");
-    private By resetEmail = By.xpath("//td[contains(text(), 'Please reset')]");
-    private By resetLink = By.xpath("//*[@class='email_body']//a[contains(@href,'PasswordReset')]");
-    private By confirmationLink = By.xpath("//a[contains(@href, 'saferailway')]");
-    private By emailLocator = By.xpath("//span[@id='inbox-id']");
-    private By emailExtension = By.xpath("//select[@id='gm-host-select']");
-    private By setBtn = By.xpath("//button[normalize-space()='Set']");
-    private String emailBox = "//span[@id='inbox-id']/input[@type='text']";
+import static base.DriverManager.waitForElementToBeVisible;
+
+public class MailPage extends BasePage {
+    private final By confirmationEmailXPath = By.xpath("//td[contains(text(), 'Please confirm')]");
+    private final By resetEmailXPath = By.xpath("//td[contains(text(), 'Please reset')]");
+    private final By resetLinkXPath = By.xpath("//*[@class='email_body']//a[contains(@href,'PasswordReset')]");
+    private final By confirmationLinkXPath = By.xpath("//a[contains(@href, 'saferailway')]");
+    private final By emailBoxXPath = By.xpath("//span[@id='inbox-id']");
+    private final By emailExtensionXPath = By.xpath("//select[@id='gm-host-select']");
+    private final By setBtnXPath = By.xpath("//button[normalize-space()='Set']");
+    private final By emailTxtBoxXPath = By.xpath("//span[@id='inbox-id']/input[@type='text']");
+    private final By mailContentXPath = By.xpath("//div[@class='email_body']");
 
     private static String email;
 
-    public static void openMailPage() {
-        String mailUrl = Config.getProperty("tempmail.url");
-        WebDriverConfig.driver.get(mailUrl);
-        //email = WebDriverConfig.driver.getWindowHandle();
-    }
 
     public void setMail(String name, String domain) {
         clickMailBox();
@@ -35,64 +34,56 @@ public class MailPage {
     }
 
     public void clickMailBox() {
-        WebElement mailBox = WebDriverConfig.driver.findElement(emailLocator);
-        mailBox.click();
+        SeleniumHelper.clickElement(emailBoxXPath);
     }
 
     public void clickSetBtn() {
-        WebElement setButton = WebDriverConfig.driver.findElement(setBtn);
-        setButton.click();
+        SeleniumHelper.clickElement(setBtnXPath);
     }
 
     public static void switchToEmail() {
-        WebDriverConfig.driver.switchTo().window(email);
+        DriverManager.driver.switchTo().window(email);
     }
 
-    public String getMail() throws Exception {
-        WebElement emailElement = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(10)).until(
-                ExpectedConditions.visibilityOfElementLocated(emailLocator)
-        );
+    public String getMail() {
+        WebElement emailElement = SeleniumHelper.findElement(emailBoxXPath);
         String emailAddress = emailElement.getText() + "@guerrillamail.com";
         System.out.println("Temporary Email Address: " + emailAddress);
         return emailAddress;
     }
 
     public void enterMail(String email) {
-        String xpathExpression = String.format(emailBox, email);
-        WebElement mailBox = WebDriverConfig.driver.findElement(By.xpath(xpathExpression));
-        mailBox.sendKeys(email);
+        SeleniumHelper.enter(emailTxtBoxXPath, email);
     }
 
     public void selectDomainMail(String domain) {
-        Select dateDropdown = new Select(WebDriverConfig.driver.findElement(emailExtension));
-        dateDropdown.selectByVisibleText(domain);
+        SeleniumHelper.selectByVisibleText(emailExtensionXPath, domain);
     }
 
-    public void verifyMail() {
-        // Wait for the confirmation email to be visible and click it
-        WebElement emailBox = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(50)).until(
-                ExpectedConditions.visibilityOfElementLocated(confirmationEmail)
-        );
-        emailBox.click();
+    public void getConFirmLinkMail() {
+        waitForElementToBeVisible(confirmationEmailXPath, 50);
+        SeleniumHelper.clickElement(confirmationEmailXPath);
+        waitForElementToBeVisible(confirmationLinkXPath, 50);
+        SeleniumHelper.clickElement(confirmationLinkXPath);
+    }
 
-        // Wait for the confirmation link to be visible and click it
-        WebElement linkElement = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(50)).until(
-                ExpectedConditions.visibilityOfElementLocated(confirmationLink)
-        );
-        linkElement.click();
+    public String getResetPasswordToken() {
+        String[] parts = SeleniumHelper.getElementText(mailContentXPath).split("The token is: ");
+        if (parts.length > 1) {
+            String[] tokenParts = parts[1].split("\\.");
+            return tokenParts[0].trim();
+        }
+        return "";
     }
 
     public void clickResetLink() {
-        // Wait for the confirmation email to be visible and click it
-        WebElement resetBox = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(50)).until(
-                ExpectedConditions.visibilityOfElementLocated(resetEmail)
-        );
-        resetBox.click();
+        waitForElementToBeVisible(resetEmailXPath, 50);
+        SeleniumHelper.clickElement(resetEmailXPath);
 
         // Wait for the confirmation link to be visible and click it
-        WebElement linkElement = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(50)).until(
-                ExpectedConditions.visibilityOfElementLocated(resetLink)
-        );
-        linkElement.click();
+        waitForElementToBeVisible(resetLinkXPath, 50);
+        SeleniumHelper.clickElement(resetLinkXPath);
     }
+
+
 }

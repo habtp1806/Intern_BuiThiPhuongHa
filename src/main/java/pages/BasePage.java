@@ -1,7 +1,7 @@
 package pages;
 
 import base.Config;
-import base.WebDriverConfig;
+import base.DriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -10,65 +10,48 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Set;
+
+import static base.DriverManager.waitForClickableElement;
 
 public class BasePage {
 
-    private WebDriverWait wait;
     private static String railway;
 
 
-    public void openHomePage() {
-        String railwayUrl = Config.getProperty("railway.url");
-        WebDriverConfig.driver.get(railwayUrl);
-        // railway = WebDriverConfig.driver.getWindowHandle();
-    }
-
-    public static void switchToRailway() {
-        WebDriverConfig.driver.switchTo().window(railway);
-    }
-
-    public void clickTab(String tabName) {
-        WebDriverWait wait = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(10));
+    public static void clickTab(String tabName) {
         String xpathExpression = String.format("//div[@id='menu']//li/a[span[text()='%s']]", tabName);
-        WebElement tabElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
-        tabElement.click();
+        waitForClickableElement(xpathExpression);
+        DriverManager.driver.findElement(By.xpath(xpathExpression)).click();
     }
 
-    public void clickLink(String linkName) {
-        WebDriverWait wait = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(10));
+
+    public static void clickLink(String linkName) {
         String xpathExpression = String.format("//a[normalize-space()='%s']", linkName);
-        WebElement tabElement = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
-        tabElement.click();
+        waitForClickableElement(xpathExpression);
+        DriverManager.driver.findElement(By.xpath(xpathExpression)).click();
     }
 
-    public static void refreshPage() {
-        WebDriverConfig.driver.navigate().refresh();
-    }
-
-    public static void switchToWindow(String windowHandle) {
-        WebDriverConfig.driver.switchTo().window(windowHandle);
+    public static void switchToRemainingTab(String windowHandleOfFirstTab, String windowHandleOfSecondTab) {
+        Set<String> allTabs = DriverManager.driver.getWindowHandles();
+        for (String tab : allTabs) {
+            if (!tab.equals(windowHandleOfFirstTab) && !tab.equals(windowHandleOfSecondTab)) {
+                DriverManager.driver.switchTo().window(tab);
+                break;
+            }
+        }
     }
 
     public static void openNewTab(String url) {
-        WebDriverConfig.driver.switchTo().newWindow(WindowType.TAB);
-        WebDriverConfig.driver.navigate().to(url);
+        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
+        DriverManager.driver.navigate().to(url);
     }
 
-    public static String getWindowHandle() {
-        return WebDriverConfig.driver.getWindowHandle();
-    }
 
-    public static void zoomIn(Double zoomNumber) {
-        ((JavascriptExecutor) WebDriverConfig.driver).executeScript(java.lang.String.format("document.body.style.zoom = '%f'", zoomNumber));
-    }
-
-    public boolean isTabPresent(String tabName) {
-        return WebDriverConfig.driver.findElements(By.linkText(tabName)).size() > 0;
-    }
-
-    public static void waitForElementToBeVisible(By locator, int timeoutInSeconds) {
-        WebDriverWait wait = new WebDriverWait(WebDriverConfig.driver, Duration.ofSeconds(timeoutInSeconds));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
+    public static boolean isTabDisplayed(String tabName) {
+        List<WebElement> tabs = DriverManager.driver.findElements(By.linkText(tabName));
+        return !tabs.isEmpty() && tabs.get(0).isDisplayed();
     }
 
 
