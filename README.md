@@ -22,7 +22,7 @@ The Selenium Railway System Test project aims to automate the testing of a railw
 ### Prerequisites
 
 Ensure you have the following installed on your machine:
-- Java Development Kit (JDK) 8 or higher
+- Java Development Kit (JDK) 11 or higher
 - Apache Maven
 - Google Chrome browser
 - ChromeDriver
