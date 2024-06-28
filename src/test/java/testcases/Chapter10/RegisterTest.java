@@ -2,19 +2,24 @@ package testcases.Chapter10;
 
 import base.Config;
 import base.DriverManager;
+import enums.RailwayTab;
 import org.testng.Assert;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.BasePage;
 import pages.HomePage;
 import pages.MailPage;
 import pages.RegisterPage;
 import testcases.base.BaseTest;
+import utils.listeners.ReportListener;
+
 
 import java.util.Set;
 
 import static base.DriverManager.*;
 import static org.testng.AssertJUnit.assertTrue;
 
+@Listeners(ReportListener.class)
 public class RegisterTest extends BaseTest {
     private final RegisterPage registerPage = new RegisterPage();
     private final MailPage mailPage = new MailPage();
@@ -24,8 +29,8 @@ public class RegisterTest extends BaseTest {
     @Test(description = "User can't create account with an already in-use email")
     public void verifyUniqueEmailRegistration() {
         navigateToRailWay();
-        BasePage.clickTab("Register");
-        registerPage.register(email, password, "123456789", "123456789");
+        BasePage.clickTab(RailwayTab.REGISTER);
+        registerPage.register(email, password, confirmPassword, pid);
         String actualErrorMessage = registerPage.verifyRegisterFailure("This email address is already in use.");
         String expectedErrorMessage = "This email address is already in use.";
         Assert.assertEquals(actualErrorMessage, expectedErrorMessage, "Error message does not match.");
@@ -35,7 +40,7 @@ public class RegisterTest extends BaseTest {
     @Test(description = "User can't create account while password and PID fields are empty")
     public void verifyEmptyFieldsRegistration() {
         navigateToRailWay();
-        BasePage.clickTab("Register");
+        BasePage.clickTab(RailwayTab.REGISTER);
         registerPage.register(email, "", "", "");
         registerPage.verifyRegisterFailure("There're errors in the form. Please correct the errors and try again.");
         String pwdError = registerPage.getPasswordErrorMessage();
@@ -54,8 +59,8 @@ public class RegisterTest extends BaseTest {
         email = mailPage.getMail();
         String mailWindow = getWindowHandle();
         switchToWindow(registerWindow);
-        BasePage.clickTab("Register");
-        registerPage.register(email, password, password, pid);
+        BasePage.clickTab(RailwayTab.REGISTER);
+        registerPage.register(email, password, confirmPassword, pid);
         assertTrue("Confirm message is not present after register successfully.", registerPage.isConfirmationSuccessful());
         switchToWindow(mailWindow);
         refreshPage();

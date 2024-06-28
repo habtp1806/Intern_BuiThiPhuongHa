@@ -1,0 +1,30 @@
+{
+  "validCredentials": {
+    "email": "nsctyhmy@guerrillamail.com",
+    "password": "123456789"
+  },
+  "invalidBlankUsername": {
+    "email": "",
+    "password": "password123"
+  },
+  "invalidPassword": {
+    "email": "nsctyhmy@guerrillamail.com",
+    "password": "invalidpass"
+  },
+  "passwordAttempts": {
+    "email": "nsctyhmy@guerrillamail.com",
+    "password": "invalidpass"
+  },
+  "inactiveAccount": {
+    "email": "inactiveuser@example.com",
+    "password": "password123"
+  },
+  "resetPasswordSameAsCurrent": {
+    "newPass": "1234567890",
+    "confirmPassword": "1234567890"
+  },
+  "resetPasswordMismatch": {
+    "newPass": "abcdef1234",
+    "confirmPassword": "abcdef1235"
+  }
+}
