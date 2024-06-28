@@ -1,14 +1,20 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="HelloSelenium" verbose="1">
+<suite name="HelloSelenium" verbose="1" parallel="classes" thread-count="1">
+    <parameter name="type" value="grid"/>
+    <listeners>
+        <listener class-name="utils.listeners.ReportListener"/>
+    </listeners>
     <test name="sample test">
+        <parameter name="browser" value="chrome"/>
         <classes>
-            <class name="testcases.Chapter10.RegisterTest"/>
-            <class name="testcases.Chapter10.LoginTest"/>
-            <class name="testcases.Chapter10.BookTicketTest"/>
+            <!--            <class name="testcases.Chapter10.RegisterTest"/>-->
+            <!--            <class name="testcases.Chapter10.LoginTest"/>-->
+
+            <!--            <class name="testcases.Chapter10.BookTicketTest"/>-->
             <class name="testcases.Chapter10.CancelBookingTest"/>
-            <class name="testcases.Chapter10.LogoutTest"/>
-            <class name="testcases.Chapter10.ResetPasswordTest"/>
+            <!--            <class name="testcases.Chapter10.LogoutTest"/>-->
+            <!--            <class name="testcases.Chapter10.ResetPasswordTest"/>-->
         </classes>
     </test>
 </suite>

@@ -2,6 +2,7 @@ package pages;
 
 import base.Config;
 import base.DriverManager;
+import enums.RailwayTab;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -20,7 +21,8 @@ public class BasePage {
     private static String railway;
 
 
-    public static void clickTab(String tabName) {
+    public static void clickTab(RailwayTab tab) {
+        String tabName = tab.getValue();
         String xpathExpression = String.format("//div[@id='menu']//li/a[span[text()='%s']]", tabName);
         waitForClickableElement(xpathExpression);
         DriverManager.driver.findElement(By.xpath(xpathExpression)).click();

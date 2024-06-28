@@ -6,17 +6,19 @@ import enums.SeatType;
 import model.BookTicket;
 import model.User;
 import org.testng.Assert;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
+import utils.DataUtils;
 import utils.DateUtils;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import utils.listeners.ReportListener;
 
 import static base.DriverManager.navigateToRailWay;
 import static org.testng.AssertJUnit.assertTrue;
 
+@Listeners(ReportListener.class)
 public class BookTicketTest extends BaseTest {
     private final BasePage basePage = new BasePage();
     private final LoginPage loginPage = new LoginPage();
@@ -25,16 +27,15 @@ public class BookTicketTest extends BaseTest {
     private final TicketPricePage ticketPricePage = new TicketPricePage();
     User user = new User(email, password);
 
-    @Test(description = "User can book 1 ticket at a time")
-    public void verifyBookingATicket() {
-        String nextDepartDate = DateUtils.calculateNextDepartDate(12);
-        BookTicket ticket = new BookTicket(nextDepartDate, RailwayStation.NHA_TRANG, RailwayStation.HUE, SeatType.SOFT_BED_AIR_CONDITIONER, "1");
+
+    @Test(description = "User can book 1 ticket at a time", dataProvider = "bookTicketDataProvider", dataProviderClass = DataUtils.class)
+    public void verifyBookingATicket(BookTicket ticket) {
         navigateToRailWay();
-        BasePage.clickTab(RailwayTab.LOGIN.getValue());
+        BasePage.clickTab(RailwayTab.LOGIN);
         loginPage.login(user);
-        BasePage.clickTab(RailwayTab.BOOK_TICKET.getValue());
+        BasePage.clickTab(RailwayTab.BOOK_TICKET);
         bookTicketPage.bookTicket(ticket);
-        boolean result = bookTicketPage.verifySelectedBooking(RailwayStation.NHA_TRANG.getValue(), RailwayStation.HUE.getValue(), SeatType.SOFT_BED_AIR_CONDITIONER.getValue(), null, null, "1");
+        boolean result = bookTicketPage.verifySelectedBooking(ticket.getDepartStation().getValue(), ticket.getArrivalStation().getValue(), ticket.getSeatType().getValue(), null, null, "1");
         assertTrue("The booking should be verified correctly", result);
     }
 
@@ -43,9 +44,9 @@ public class BookTicketTest extends BaseTest {
         String nextDepartDate = DateUtils.calculateNextDepartDate(25);
         BookTicket ticket = new BookTicket(nextDepartDate, RailwayStation.NHA_TRANG, RailwayStation.SAI_GON, SeatType.SOFT_SEAT_AIR_CONDITIONER, "5");
         navigateToRailWay();
-        BasePage.clickTab(RailwayTab.LOGIN.getValue());
+        BasePage.clickTab(RailwayTab.LOGIN);
         loginPage.login(user);
-        BasePage.clickTab(RailwayTab.BOOK_TICKET.getValue());
+        BasePage.clickTab(RailwayTab.BOOK_TICKET);
         bookTicketPage.bookTicket(ticket);
         boolean result = bookTicketPage.verifySelectedBooking(RailwayStation.NHA_TRANG.getValue(), RailwayStation.SAI_GON.getValue(), SeatType.SOFT_SEAT_AIR_CONDITIONER.getValue(), null, null, "5");
         assertTrue("The booking should be verified correctly", result);
@@ -54,9 +55,9 @@ public class BookTicketTest extends BaseTest {
     @Test(description = "User can check price of ticket from Timetable")
     public void verifyTicketPriceFromTimetable() {
         navigateToRailWay();
-        BasePage.clickTab(RailwayTab.LOGIN.getValue());
+        BasePage.clickTab(RailwayTab.LOGIN);
         loginPage.login(user);
-        BasePage.clickTab(RailwayTab.TIMETABLE.getValue());
+        BasePage.clickTab(RailwayTab.TIMETABLE);
         timeTablePage.clickCheckPrice(RailwayStation.DA_NANG.getValue(), RailwayStation.SAI_GON.getValue());
         Assert.assertTrue(ticketPricePage.verifyTitleTable(RailwayStation.DA_NANG.getValue(), RailwayStation.SAI_GON.getValue()), "Title is not displayed");
         Assert.assertEquals(ticketPricePage.getPriceOfSeatType("HS"), 310000, "Price of Hard seat is wrong");
@@ -72,14 +73,14 @@ public class BookTicketTest extends BaseTest {
     public void verifyBookingFromTimetable() {
         String numTicket = "5";
         String nextDepartDate = DateUtils.calculateNextDepartDate(10);
-        BookTicket ticket = new BookTicket(nextDepartDate, null, null, null, numTicket);
+        BookTicket ticket = new BookTicket(nextDepartDate, SeatType.SOFT_SEAT_AIR_CONDITIONER, numTicket);
         navigateToRailWay();
-        BasePage.clickTab(RailwayTab.LOGIN.getValue());
+        BasePage.clickTab(RailwayTab.LOGIN);
         loginPage.login(user);
-        BasePage.clickTab(RailwayTab.TIMETABLE.getValue());
+        BasePage.clickTab(RailwayTab.TIMETABLE);
         timeTablePage.clickBookTicket(RailwayStation.QUANG_NGAI.getValue(), RailwayStation.HUE.getValue());
         bookTicketPage.bookTicket(ticket);
-        boolean result = bookTicketPage.verifySelectedBooking(RailwayStation.QUANG_NGAI.getValue(), RailwayStation.HUE.getValue(), null, null, null, numTicket);
+        boolean result = bookTicketPage.verifySelectedBooking(RailwayStation.QUANG_NGAI.getValue(), RailwayStation.HUE.getValue(), SeatType.SOFT_SEAT_AIR_CONDITIONER.getValue(), null, null, numTicket);
         assertTrue("The booking should be verified correctly", result);
     }
 

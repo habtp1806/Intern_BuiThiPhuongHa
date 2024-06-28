@@ -34,16 +34,16 @@ public class Chapter3Test extends BaseTest {
         email = mailPage.getMail();
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
         navigateToRailWay();
-        BasePage.clickTab(RailwayTab.REGISTER.getValue());
+        BasePage.clickTab(RailwayTab.REGISTER);
         registerPage.register(email, password, password, password);
         DriverManager.driver.switchTo().window(originalWindowHandle);
         DriverManager.driver.navigate().refresh();
         mailPage.getConFirmLinkMail();
         DriverManager.driver.switchTo().newWindow(WindowType.TAB);
         navigateToRailWay();
-        BasePage.clickTab(RailwayTab.LOGIN.getValue());
+        BasePage.clickTab(RailwayTab.LOGIN);
         loginPage.login(user);
-        BasePage.clickTab(RailwayTab.BOOK_TICKET.getValue());
+        BasePage.clickTab(RailwayTab.BOOK_TICKET);
         bookTicketPage.bookTicket(ticket);
     }
 

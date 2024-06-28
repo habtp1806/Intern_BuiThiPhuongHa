@@ -26,7 +26,7 @@ public class MyTicketPage {
         DriverManager.driver.switchTo().alert().accept();
     }
 
-    public boolean checkTicketDisappear(BookTicket ticket) {
+    public boolean doesTicketDisappear(BookTicket ticket) {
         String xpathTicket = String.format("//table[@class='MyTable']//tr[td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s' and following-sibling::td[text()='%s']]]]]]//input[contains(@onclick, 'Delete')]",
                 ticket.getDepartStation().getValue(),
                 ticket.getArrivalStation().getValue(),

@@ -49,11 +49,15 @@ public class BookTicketPage extends BasePage {
     }
 
     public void enterArriveAt(RailwayStation arriveStation) {
-        SeleniumHelper.enter(getXPathByName("ArriveStation"), arriveStation.getValue());
+        if (arriveStation != null) {
+            SeleniumHelper.enter(getXPathByName("ArriveStation"), arriveStation.getValue());
+        }
     }
 
     public void selectDepartFrom(RailwayStation departStation) {
-        SeleniumHelper.selectByVisibleText(getXPathByName("DepartStation"), departStation.getValue());
+        if (departStation != null) {
+            SeleniumHelper.selectByVisibleText(getXPathByName("DepartStation"), departStation.getValue());
+        }
     }
 
 
@@ -62,7 +66,9 @@ public class BookTicketPage extends BasePage {
     }
 
     public void enterTypeSeat(SeatType seatType) {
-        SeleniumHelper.enter(getXPathByName("SeatType"), seatType.getValue());
+        if (seatType != null) {
+            SeleniumHelper.enter(getXPathByName("SeatType"), seatType.getValue());
+        }
     }
 
     public void clickBookTicket() {

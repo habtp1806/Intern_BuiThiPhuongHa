@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2024-06-25T10:49:08 ICT" name="Default Suite" finished-at="2024-06-25T10:49:29 ICT" duration-ms="21296">
+    <groups>
+    </groups>
+    <test started-at="2024-06-25T10:49:08 ICT" name="HelloSelenium" finished-at="2024-06-25T10:49:29 ICT" duration-ms="21296">
+      <class name="testcases.Chapter10.RegisterTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:testcases.Chapter10.RegisterTest@6cf31447]" started-at="2024-06-25T10:49:19 ICT" name="setUp" finished-at="2024-06-25T10:49:20 ICT" duration-ms="1264" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="verifyUniqueEmailRegistration(model.User)[pri:0, instance:testcases.Chapter10.RegisterTest@6cf31447]" started-at="2024-06-25T10:49:20 ICT" name="verifyUniqueEmailRegistration" description="User can&#039;t create account with an already in-use email" data-provider="dataProvider1" finished-at="2024-06-25T10:49:29 ICT" duration-ms="8441" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[model.User@3bf01a01]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyUniqueEmailRegistration -->
+        <test-method is-config="true" signature="quitBrowser()[pri:0, instance:testcases.Chapter10.RegisterTest@6cf31447]" started-at="2024-06-25T10:49:29 ICT" name="quitBrowser" finished-at="2024-06-25T10:49:29 ICT" duration-ms="302" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- quitBrowser -->
+      </class> <!-- testcases.Chapter10.RegisterTest -->
+    </test> <!-- HelloSelenium -->
+  </suite> <!-- Default Suite -->
+</testng-results>

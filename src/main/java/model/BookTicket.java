@@ -10,21 +10,19 @@ public class BookTicket {
     private SeatType seatType;
     private String ticketAmount;
 
-    public BookTicket() {
-        this.departDate = "";
-        this.departStation = null;
-        this.arrivalStation = null;
-        this.seatType = null;
-        this.ticketAmount = "";
+    public BookTicket(String departDate, SeatType seatType, String ticketAmount) {
+        this.departDate = departDate;
+        this.seatType = seatType;
+        this.ticketAmount = ticketAmount;
     }
 
     // Constructor with parameters
     public BookTicket(String departDate, RailwayStation departStation, RailwayStation arrivalStation, SeatType seatType, String ticketAmount) {
-        this.departDate = (departDate != null) ? departDate : "";
+        this.departDate = departDate;
         this.departStation = departStation;
         this.arrivalStation = arrivalStation;
         this.seatType = seatType;
-        this.ticketAmount = (ticketAmount != null) ? ticketAmount : "";
+        this.ticketAmount = ticketAmount;
     }
 
     public String getDepartDate() {
