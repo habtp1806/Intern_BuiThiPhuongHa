@@ -15,7 +15,7 @@ public class SeleniumHelper {
 
 
     public static WebElement findElement(By element) {
-        return DriverManager.driver.findElement(element);
+        return DriverManager.getDriver().findElement(element);
     }
 
     public static String getElementText(By element) {
@@ -28,18 +28,18 @@ public class SeleniumHelper {
 
     public static void enter(By locator, String text) {
         waitForElementToBeVisible(locator, Config.getTimeInSeconds("timeout"));
-        WebElement element = DriverManager.driver.findElement(locator);
+        WebElement element = DriverManager.getDriver().findElement(locator);
         // element.clear();
         element.sendKeys(text);
     }
 
     public static void selectByVisibleText(By locator, String text) {
-        Select dropdown = new Select(DriverManager.driver.findElement(locator));
+        Select dropdown = new Select(DriverManager.getDriver().findElement(locator));
         dropdown.selectByVisibleText(text);
     }
 
     public static void clickElement(By locator) {
-        WebElement element = DriverManager.driver.findElement(locator);
+        WebElement element = DriverManager.getDriver().findElement(locator);
         element.click();
     }
 
@@ -50,7 +50,7 @@ public class SeleniumHelper {
 
     public static boolean isElementDisplayed(By locator) {
         try {
-            WebElement element = DriverManager.driver.findElement(locator);
+            WebElement element = DriverManager.getDriver().findElement(locator);
             return element.isDisplayed();
         } catch (Exception e) {
             return false;
@@ -58,8 +58,8 @@ public class SeleniumHelper {
     }
 
     public static void scrollToElement(By locator) {
-        WebElement element = DriverManager.driver.findElement(locator);
-        ((JavascriptExecutor) DriverManager.driver).executeScript("arguments[0].scrollIntoView(true);", element);
+        WebElement element = DriverManager.getDriver().findElement(locator);
+        ((JavascriptExecutor) DriverManager.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
 }

@@ -30,7 +30,7 @@ public class ResetPasswordTest extends BaseTest {
         BasePage.clickTab(RailwayTab.LOGIN);
         BasePage.clickLink("Forgot Password page");
         forgotPassPage.sendForgotPass(email);
-        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         navigateToMailPage();
         String mailWindow = getWindowHandle();
         mailPage.setMail("dqzvyoml", "guerrillamail.com");
@@ -55,7 +55,7 @@ public class ResetPasswordTest extends BaseTest {
         BasePage.clickTab(RailwayTab.LOGIN);
         BasePage.clickLink("Forgot Password page");
         forgotPassPage.sendForgotPass(email);
-        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
         navigateToMailPage();
         String mailWindow = getWindowHandle();
         mailPage.setMail("dqzvyoml", "guerrillamail.com");

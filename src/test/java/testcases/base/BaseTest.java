@@ -18,21 +18,23 @@ public class BaseTest {
     protected String confirmPassword = "123456789";
     protected String pid = "123456789";
 
-
     @BeforeMethod
-    @Parameters({"browser", "type"})
-    public void setUp(@Optional("chrome") String browser, @Optional("local") String type) throws MalformedURLException {
-        if (type.equals("grid"))
+    @Parameters({"browser", "runmode"})
+    public void setUp(@Optional("chrome") String browser, @Optional("local") String runmode) throws MalformedURLException {
+        DriverManager.setBrowser(browser); // Set browser type using ThreadLocal
+        DriverManager.setRunmode(runmode); // Set runmode using ThreadLocal
+        if (runmode.equals("grid")) {
             DriverManager.initRemoteDriver(browser);
-        else {
+        } else {
             DriverManager.initDriver(browser);
         }
     }
 
     @AfterMethod
     public void tearDown() {
-        if (DriverManager.driver != null) {
-            DriverManager.driver.quit();
+        if (DriverManager.getDriver() != null) {
+            DriverManager.getDriver().quit();
         }
     }
 }
+

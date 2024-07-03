@@ -42,7 +42,7 @@ public class MailPage extends BasePage {
     }
 
     public static void switchToEmail() {
-        DriverManager.driver.switchTo().window(email);
+        DriverManager.getDriver().switchTo().window(email);
     }
 
     public String getMail() {

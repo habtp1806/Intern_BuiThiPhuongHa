@@ -40,7 +40,7 @@ public class BookTicketPage extends BasePage {
     }
 
     public String getSelectedDepartDate() {
-        Select dateDropdown = new Select(DriverManager.driver.findElement(getXPathByName("Date")));
+        Select dateDropdown = new Select(DriverManager.getDriver().findElement(getXPathByName("Date")));
         return dateDropdown.getFirstSelectedOption().getText();
     }
 
@@ -77,7 +77,7 @@ public class BookTicketPage extends BasePage {
     }
 
     public String getPageTitle() {
-        return DriverManager.driver.getTitle();
+        return DriverManager.getDriver().getTitle();
     }
 
 
@@ -88,7 +88,7 @@ public class BookTicketPage extends BasePage {
     }
 
     public boolean verifySelectedBooking(String from, String to, String seatType, String bookingDate, String expriedDate, String amount) {
-        WebElement table = DriverManager.driver.findElement(bookTicketTableXPath);
+        WebElement table = DriverManager.getDriver().findElement(bookTicketTableXPath);
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (WebElement row : rows) {
             List<WebElement> cells = row.findElements(By.tagName("td"));

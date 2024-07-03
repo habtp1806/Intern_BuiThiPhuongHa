@@ -15,8 +15,6 @@ import utils.extendreport.ExtentTestManager;
 import utils.helpers.CaptureHelpers;
 import utils.log.Log;
 
-import java.net.MalformedURLException;
-
 
 public class ReportListener implements ITestListener {
 
@@ -48,19 +46,6 @@ public class ReportListener implements ITestListener {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
     }
 
-//    @Override
-//    public void onStart(ITestContext iTestContext) {
-//        Log.info("Start testing " + iTestContext.getName());
-//        DriverManager.initDriver(;
-//
-//        iTestContext.setAttribute("WebDriver", DriverManager.driver);
-//        //Gọi hàm startRecord video trong CaptureHelpers class
-//        try {
-//            CaptureHelpers.startRecord(iTestContext.getName());
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     @Override
     public void onFinish(ITestContext iTestContext) {
@@ -93,7 +78,7 @@ public class ReportListener implements ITestListener {
 
         //Allure Screenshot custom
         Log.error("Screenshot captured for test case: " + getTestName(iTestResult));
-        saveScreenshotPNG(DriverManager.driver);
+        saveScreenshotPNG(DriverManager.getDriver());
         //Save a log on Allure report.
         saveTextLog(getTestName(iTestResult) + " failed and screenshot taken!");
     }

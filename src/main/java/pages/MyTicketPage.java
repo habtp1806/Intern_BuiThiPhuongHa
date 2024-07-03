@@ -23,7 +23,7 @@ public class MyTicketPage {
     }
 
     public void confirmCancel() {
-        DriverManager.driver.switchTo().alert().accept();
+        DriverManager.getDriver().switchTo().alert().accept();
     }
 
     public boolean doesTicketDisappear(BookTicket ticket) {
@@ -36,7 +36,7 @@ public class MyTicketPage {
         By locator = By.xpath(xpathTicket);
         int timeoutInSeconds = Config.getTimeInSeconds("timeout");
         DriverManager.waitForElementToBeVisible(locator, timeoutInSeconds);
-        WebElement element = DriverManager.driver.findElement(locator);
+        WebElement element = DriverManager.getDriver().findElement(locator);
         return !element.isDisplayed();
     }
 }
