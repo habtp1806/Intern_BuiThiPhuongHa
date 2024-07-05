@@ -1,15 +1,13 @@
 package pages;
 
-import base.Config;
 import base.DriverManager;
 import enums.RailwayStation;
 import enums.SeatType;
 import model.BookTicket;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import utils.SeleniumHelper;
+import utils.commons.SeleniumHelper;
 
 import java.util.List;
 

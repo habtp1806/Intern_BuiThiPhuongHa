@@ -1,4 +1,4 @@
-package utils;
+package utils.commons;
 
 import base.Config;
 import base.DriverManager;

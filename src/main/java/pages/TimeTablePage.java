@@ -1,12 +1,8 @@
 package pages;
 
 
-import base.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import utils.SeleniumHelper;
-
-import static utils.SeleniumHelper.scrollToElement;
+import utils.commons.SeleniumHelper;
 
 public class TimeTablePage extends BasePage {
 

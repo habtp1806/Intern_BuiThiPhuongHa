@@ -6,13 +6,12 @@ import enums.SeatType;
 import model.BookTicket;
 import model.User;
 import org.testng.Assert;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
-import utils.DataUtils;
-import utils.DateUtils;
+import utils.commons.DataUtils;
+import utils.commons.DateUtils;
 import utils.listeners.ReportListener;
 
 import static base.DriverManager.navigateToRailWay;

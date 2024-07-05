@@ -1,11 +1,10 @@
-package utils;
+package utils.commons;
 
 import base.Config;
 import enums.RailwayStation;
 import enums.SeatType;
 import model.BookTicket;
 import model.User;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import org.testng.annotations.DataProvider;
 
@@ -17,7 +16,7 @@ public class DataUtils {
         String password = loginData.getString("password");
         return new User(email, password);
     }
-    
+
 
     @DataProvider(name = "bookTicketDataProvider")
     public static Object[][] bookTicketDataProvider() {
@@ -31,5 +30,11 @@ public class DataUtils {
         };
     }
 
-
+    @DataProvider(name = "browserData", parallel = true)
+    public Object[][] browserProvider() {
+        return new Object[][]{
+                {"firefox"},
+                {"chrome"},
+        };
+    }
 }

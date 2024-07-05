@@ -7,13 +7,11 @@ import enums.SeatType;
 import model.BookTicket;
 import model.User;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
-import utils.DateUtils;
+import utils.commons.DateUtils;
 import utils.listeners.ReportListener;
 
 import static base.DriverManager.*;

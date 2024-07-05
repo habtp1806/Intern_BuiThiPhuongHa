@@ -7,7 +7,7 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.*;
 import testcases.base.BaseTest;
-import utils.DataUtils;
+import utils.commons.DataUtils;
 import utils.listeners.ReportListener;
 
 import static base.DriverManager.navigateToRailWay;

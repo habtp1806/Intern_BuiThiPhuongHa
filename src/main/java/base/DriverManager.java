@@ -24,7 +24,7 @@ public class DriverManager {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<String> browserThreadLocal = new ThreadLocal<>();
     private static final ThreadLocal<String> runmodeThreadLocal = new ThreadLocal<>();
-    private static final String HUB_URL = "http://192.168.60.15:4444/wd/hub";
+    private static final String HUB_URL = "http://localhost:4444/wd/hub";
 
     public static WebDriver getDriver() {
         return driverThreadLocal.get();
@@ -137,12 +137,5 @@ public class DriverManager {
     public static String getWindowHandle() {
         return getDriver().getWindowHandle();
     }
-
-    public static void quitDriver() {
-        WebDriver driver = getDriver();
-        if (driver != null) {
-            driver.quit();
-            driverThreadLocal.remove(); // Remove the driver instance from ThreadLocal
-        }
-    }
+    
 }

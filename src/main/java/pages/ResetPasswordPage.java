@@ -1,13 +1,7 @@
 package pages;
 
-import base.Config;
-import base.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import utils.SeleniumHelper;
-
-import static base.DriverManager.waitForElementToBeVisible;
+import utils.commons.SeleniumHelper;
 
 public class ResetPasswordPage {
     private final By resetBtnXPath = By.xpath("//input[@title='Reset password']");

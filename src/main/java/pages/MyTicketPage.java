@@ -5,11 +5,7 @@ import base.DriverManager;
 import model.BookTicket;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.SeleniumHelper;
-
-import java.time.Duration;
+import utils.commons.SeleniumHelper;
 
 public class MyTicketPage {
     private final String xpathTicket = "//table[@class='MyTable']//tr[td[text()='%s' and following-sibling::td[text()='%s'" +

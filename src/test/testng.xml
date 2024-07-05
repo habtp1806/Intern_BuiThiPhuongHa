@@ -1,6 +1,6 @@
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
 
-<suite name="HelloSelenium" parallel="tests" thread-count="2">
+<suite name="HelloSelenium" parallel="tests" thread-count="3">
 
     <listeners>
         <listener class-name="utils.listeners.ReportListener"/>
@@ -19,4 +19,5 @@
             <class name="testcases.Chapter10.LogoutTest"/>
         </classes>
     </test>
+    
 </suite>
