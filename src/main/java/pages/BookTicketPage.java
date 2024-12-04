@@ -1,15 +1,13 @@
 package pages;
 
-import base.Config;
 import base.DriverManager;
 import enums.RailwayStation;
 import enums.SeatType;
 import model.BookTicket;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
-import utils.SeleniumHelper;
+import utils.commons.SeleniumHelper;
 
 import java.util.List;
 
@@ -40,7 +38,7 @@ public class BookTicketPage extends BasePage {
     }
 
     public String getSelectedDepartDate() {
-        Select dateDropdown = new Select(DriverManager.driver.findElement(getXPathByName("Date")));
+        Select dateDropdown = new Select(DriverManager.getDriver().findElement(getXPathByName("Date")));
         return dateDropdown.getFirstSelectedOption().getText();
     }
 
@@ -49,11 +47,15 @@ public class BookTicketPage extends BasePage {
     }
 
     public void enterArriveAt(RailwayStation arriveStation) {
-        SeleniumHelper.enter(getXPathByName("ArriveStation"), arriveStation.getValue());
+        if (arriveStation != null) {
+            SeleniumHelper.enter(getXPathByName("ArriveStation"), arriveStation.getValue());
+        }
     }
 
     public void selectDepartFrom(RailwayStation departStation) {
-        SeleniumHelper.selectByVisibleText(getXPathByName("DepartStation"), departStation.getValue());
+        if (departStation != null) {
+            SeleniumHelper.selectByVisibleText(getXPathByName("DepartStation"), departStation.getValue());
+        }
     }
 
 
@@ -62,7 +64,9 @@ public class BookTicketPage extends BasePage {
     }
 
     public void enterTypeSeat(SeatType seatType) {
-        SeleniumHelper.enter(getXPathByName("SeatType"), seatType.getValue());
+        if (seatType != null) {
+            SeleniumHelper.enter(getXPathByName("SeatType"), seatType.getValue());
+        }
     }
 
     public void clickBookTicket() {
@@ -71,7 +75,7 @@ public class BookTicketPage extends BasePage {
     }
 
     public String getPageTitle() {
-        return DriverManager.driver.getTitle();
+        return DriverManager.getDriver().getTitle();
     }
 
 
@@ -82,7 +86,7 @@ public class BookTicketPage extends BasePage {
     }
 
     public boolean verifySelectedBooking(String from, String to, String seatType, String bookingDate, String expriedDate, String amount) {
-        WebElement table = DriverManager.driver.findElement(bookTicketTableXPath);
+        WebElement table = DriverManager.getDriver().findElement(bookTicketTableXPath);
         List<WebElement> rows = table.findElements(By.tagName("tr"));
         for (WebElement row : rows) {
             List<WebElement> cells = row.findElements(By.tagName("td"));

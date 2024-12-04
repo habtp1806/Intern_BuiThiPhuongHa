@@ -1,9 +1,7 @@
 package pages;
 
-import base.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import utils.SeleniumHelper;
+import utils.commons.SeleniumHelper;
 
 public class ForgotPassPage {
     private final By emailXPath = By.xpath("//input[@id='email']");

@@ -1,58 +1,56 @@
 package pages;
 
 import base.Config;
-import base.DriverManager;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.WindowType;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import base.DriverManager;
+import enums.RailwayTab;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
-import static base.DriverManager.waitForClickableElement;
-
 public class BasePage {
 
-    private static String railway;
-
-
-    public static void clickTab(String tabName) {
+    public static void clickTab(RailwayTab tab) {
+        String tabName = tab.getValue();
         String xpathExpression = String.format("//div[@id='menu']//li/a[span[text()='%s']]", tabName);
         waitForClickableElement(xpathExpression);
-        DriverManager.driver.findElement(By.xpath(xpathExpression)).click();
+        DriverManager.getDriver().findElement(By.xpath(xpathExpression)).click();
     }
-
 
     public static void clickLink(String linkName) {
         String xpathExpression = String.format("//a[normalize-space()='%s']", linkName);
         waitForClickableElement(xpathExpression);
-        DriverManager.driver.findElement(By.xpath(xpathExpression)).click();
+        DriverManager.getDriver().findElement(By.xpath(xpathExpression)).click();
     }
 
     public static void switchToRemainingTab(String windowHandleOfFirstTab, String windowHandleOfSecondTab) {
-        Set<String> allTabs = DriverManager.driver.getWindowHandles();
+        Set<String> allTabs = DriverManager.getDriver().getWindowHandles();
         for (String tab : allTabs) {
             if (!tab.equals(windowHandleOfFirstTab) && !tab.equals(windowHandleOfSecondTab)) {
-                DriverManager.driver.switchTo().window(tab);
+                DriverManager.getDriver().switchTo().window(tab);
                 break;
             }
         }
     }
 
     public static void openNewTab(String url) {
-        DriverManager.driver.switchTo().newWindow(WindowType.TAB);
-        DriverManager.driver.navigate().to(url);
+        DriverManager.getDriver().switchTo().newWindow(WindowType.TAB);
+        DriverManager.getDriver().navigate().to(url);
     }
 
-
     public static boolean isTabDisplayed(String tabName) {
-        List<WebElement> tabs = DriverManager.driver.findElements(By.linkText(tabName));
+        List<WebElement> tabs = DriverManager.getDriver().findElements(By.linkText(tabName));
         return !tabs.isEmpty() && tabs.get(0).isDisplayed();
     }
 
-
+    private static void waitForClickableElement(String xpathExpression) {
+        int timeoutInSeconds = Config.getTimeInSeconds("timeout");
+        WebDriverWait wait = new WebDriverWait(DriverManager.getDriver(), Duration.ofSeconds(timeoutInSeconds));
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpathExpression)));
+    }
 }

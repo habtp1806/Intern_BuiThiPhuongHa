@@ -1,14 +1,8 @@
 package pages;
 
-import base.Config;
 import base.DriverManager;
 import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.SeleniumHelper;
-
-import java.time.Duration;
+import utils.commons.SeleniumHelper;
 
 import static base.DriverManager.waitForElementToBeVisible;
 
@@ -42,7 +36,7 @@ public class MailPage extends BasePage {
     }
 
     public static void switchToEmail() {
-        DriverManager.driver.switchTo().window(email);
+        DriverManager.getDriver().switchTo().window(email);
     }
 
     public String getMail() {

@@ -1,8 +1,7 @@
 package pages;
 
-import base.DriverManager;
 import org.openqa.selenium.By;
-import utils.SeleniumHelper;
+import utils.commons.SeleniumHelper;
 
 public class HomePage extends BasePage {
     private final By linkRegisterXPath = By.xpath("//a[normalize-space()='create an account']");
